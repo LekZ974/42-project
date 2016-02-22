@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/22 17:48:41 by ahoareau         ###   ########.fr       */
+/*   Created: 2016/02/22 17:27:03 by ahoareau          #+#    #+#             */
+/*   Updated: 2016/02/22 17:49:34 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-#define FILLIT_H
+#include "fillit.h"
 
-# define BUF_SIZE 1
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include "../../libft/libft.h"
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
-int		open_close(char *file);
-int		ft_sqrt(int nb);
-void	display_square(int res);
-void	ft_putchar(char c);
+void	display_square(int res)
+{
+	int	i;
+	int j;
 
-#endif
+	i = 0;
+	j = 0;
+	while (i < res)
+	{
+		while (j < res)
+		{
+			ft_putchar('.');
+			j++;
+			if (j == res)
+				ft_putchar('\n');
+		}
+		i++;
+		j = 0;
+	}
+}
