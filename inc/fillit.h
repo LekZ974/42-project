@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/22 17:48:41 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/02/22 19:34:45 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,29 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-# include "../../libft/libft.h"
 
-int		open_close(char *file);
-int		ft_sqrt(int nb);
-void	display_square(int res);
-void	ft_putchar(char c);
+typedef struct			s_node
+{
+	char				data;
+	int					pos;
+	struct s_node		*next;
+	struct s_node		*prev;	
+}						t_node;
+
+typedef	struct			s_list
+{
+	struct s_node		*head;
+	struct s_node		*tail;
+}						t_list;
+
+int						open_close(char *file);					// plateau.c
+int						ft_sqrt(int nb);
+
+void					display_square(t_list *list, int res);	//display.c
+void					ft_putchar(char c);
+
+t_list					*create_list(void);						// list.c
+t_list					*push_back(t_list *list, int position);
+void					list_delete(t_list **list);
 
 #endif

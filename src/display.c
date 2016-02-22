@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 17:27:03 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/22 17:49:34 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/02/22 19:54:16 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,26 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-void	display_square(int res)
+void	display_square(t_list *list, int res)
 {
-	int	i;
-	int j;
+	t_node	*tmp;
+	int		i;
+	int		j;
 
-	i = 0;
+	tmp = list->head;
+	i = 1;
 	j = 0;
-	while (i < res)
+	while (tmp)
 	{
-		while (j < res)
+		ft_putchar(tmp->data);
+		if (i == res)
 		{
-			ft_putchar('.');
-			j++;
-			if (j == res)
-				ft_putchar('\n');
+			ft_putchar('\n');
+			i = 0;
 		}
 		i++;
-		j = 0;
+		tmp = tmp->next;
+		j++;
 	}
+	printf("j = %d\n", j);
 }
