@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/23 07:52:06 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/23 08:31:51 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ int		open_close(char *file)
 	index = 0;
 	i = 0;
 	list = create_list();
-	fd = open(file, O_RDONLY);		//lecture fichier 
+	fd = open(file, O_RDONLY);	//lecture fichier 
 	while (read(fd, buf, 1))
 	{
 		if (buf[0] == '\n')
 			index++;
 	}
 	nbT = (index / 5) + 1;
-	res = ft_sqrt(nbT * 4);			// res = cote carre
+	res = ft_sqrt(nbT * 4);		// res = cote carre
 	while (i < (res * res))		// creation plateau avec liste doublechaine
 	{
 		list = push_back(list, i);
 		i++;
 	}
 	display_square(list, res);
-	printf("index : %d, nbT : %d\nracine nbT : %d\n", index, nbT, ft_sqrt(nbT * 4));
+	printf("index : %d, nbT : %d\nracine nbT : %d\n", index, nbT, res);
 	printf("i : %d\n", i);
-	list_delete(&list);				// suppression liste
+	list_delete(&list);			// suppression liste
 	close(fd);
 	return (0);
 }
