@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/23 17:01:19 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/02/25 12:55:50 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,16 @@ typedef	struct			s_list
 	struct s_node		*tail;
 }						t_list;
 
+typedef	struct			s_tlist
+{
+	struct s_tetri		*hhead;
+	struct s_tetri		*ttail;
+}						t_tlist;
+
 typedef struct			s_tetri
 {
-	char				tetriminos[21];
+	int					p[3];
+	int					len_square;
 	struct s_tetri		*next;
 	struct s_tetri		*prev;
 }						t_tetri;
@@ -49,7 +56,14 @@ void					display_square(t_list *list, int res);	//display.c
 void					ft_putchar(char c);
 
 t_list					*create_list(void);						// list.c
+t_tlist					*create_ttlist(void);						// list.c
 t_list					*push_back(t_list *list, int position);
 void					list_delete(t_list **list);
+void					ttlist_delete(t_tlist **list);
+t_tlist					*append_tetri(t_tlist *list, int *data);
+t_tetri					*create_link(int *data);
+
+t_tlist					*add_tetriminos(char *file, t_tlist *list2);
+void					print_tetriminos(t_tlist *list);
 
 #endif

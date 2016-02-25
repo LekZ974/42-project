@@ -6,68 +6,97 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 15:40:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/23 16:54:04 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/02/25 12:55:48 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		who_is_min(int *tab)
+t_tlist		*add_tetriminos(char *file, t_tlist *list2)
 {
-	int	min;
-	int	i;
-
-	min = 0;
-	i = 0;
-	while (i <= min)
-	{
-		min = tab[i];
-		i++;
-	}
-	return (min);
-}
-
-/*int		read_piece(t_list *list, int nbT, char *file)
-{
-	char	buf[BUF_SIZE];
 	int		fd;
-	int		point;
 	int		i;
 	int		j;
 	int		k;
+	int		l;
 	int		tab[4];
-	int		min;
+	char	buf[BUF_SIZE];
+	char	*new_buf;
 
 	i = 0;
 	j = 0;
 	k = 0;
-	point = 0;
+	l = 0;
 	fd = open(file, O_RDONLY);
-	while (nbT > 0)
+	while (read(fd, buf, 1))
+		i++;
+	new_buf = malloc(sizeof(char) * i);
+	fd = open(file, O_RDONLY);
+	if (new_buf)
 	{
-		while (read (fd, buf, 1))
+		read(fd, new_buf, i);
+		while (new_buf[j])
 		{
-			if (buf[0] == '.')
-				point++;
-			else if (j == 4)
+			if (new_buf[j] == '#')
 			{
-				j = 0;
-				tab[i] = point;
-				point = 0;
-				i++;
+				j++;
+				while (new_buf[j] != '#')
+				{
+					tab[k] = l++;
+					j++;
+				}
+				l = 0;
+				k++;
+				if (k == 4)
+				{
+					list2 = append_tetri(list2, tab);
+					k = 0;
+				}
 			}
-			if (k == 21)
-				break ;
-			k++;
 			j++;
 		}
-		k = 0;
-		nbT--;
-		min = who_is_min(&tab);
-		close(fd);
-		fd = open(file, O_RDONLY);
 	}
-	return (0);
-}*/
+	free(new_buf);
+	close(fd);
+	return (list2);
+}
 
+void	print_tetriminos(t_tlist *list)
+{
+	t_tetri		*tmp;
+	int			i;
+	int			k;
+	int			j;
+	int			l;
 
+	i = 0;
+	j = 0;
+	k = 0;
+	l = 0;
+	tmp = list->head;
+	while (tmp)
+	{
+		while (k < 20)
+		{
+			if (i < 4 && tmp->p[j] != l)
+				ft_putchar(' ');
+			else if (tmp->p[j] == l)
+			{
+				ft_putchar('#');
+				l = 0;
+			}
+			else if (i == 4)
+			{
+				ft_putchar('\n');
+				i = 0;
+			}
+			else if (j == 3)
+				j = 0;
+			i++;
+			l++;
+			j++;
+			k++;
+		}
+		tmp = tmp->next;
+	}
+}
