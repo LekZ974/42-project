@@ -6,97 +6,67 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 15:40:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/25 12:55:48 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/25 17:11:56 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-t_tlist		*add_tetriminos(char *file, t_tlist *list2)
+void	add_tetriminos(char *file, t_tlist *list2)
 {
 	int		fd;
 	int		i;
-	int		j;
 	int		k;
 	int		l;
-	int		tab[4];
+	int		j;
+	int		s;
+	int		tab[3];
 	char	buf[BUF_SIZE];
 	char	*new_buf;
 
 	i = 0;
-	j = 0;
 	k = 0;
 	l = 0;
+	s = 0;
+	j = 0;
 	fd = open(file, O_RDONLY);
 	while (read(fd, buf, 1))
 		i++;
-	new_buf = malloc(sizeof(char) * i);
+	close(fd);
 	fd = open(file, O_RDONLY);
+	new_buf = malloc(sizeof(char) * i);
+	read(fd, new_buf, i);
+	close(fd);
 	if (new_buf)
 	{
-		read(fd, new_buf, i);
 		while (new_buf[j])
 		{
 			if (new_buf[j] == '#')
 			{
-				j++;
-				while (new_buf[j] != '#')
+				if (s == 1)
 				{
-					tab[k] = l++;
-					j++;
+					printf("%d\n", k);
+					tab[k] = l;
+					l = 0;
+					k++;
 				}
+				++l;
+				s = 1;
+			}
+			if (new_buf[j] != '#' && s == 1)
+				l++;
+			if (k == 3)
+			{
+				list2 = append_tetri(list2, tab);
+				k = 0;
+			}
+			if (new_buf[j] == '\n' && new_buf[j + 1] == '\n')
+			{
 				l = 0;
-				k++;
-				if (k == 4)
-				{
-					list2 = append_tetri(list2, tab);
-					k = 0;
-				}
+				s = 0;
 			}
 			j++;
 		}
 	}
 	free(new_buf);
-	close(fd);
-	return (list2);
-}
-
-void	print_tetriminos(t_tlist *list)
-{
-	t_tetri		*tmp;
-	int			i;
-	int			k;
-	int			j;
-	int			l;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	l = 0;
-	tmp = list->head;
-	while (tmp)
-	{
-		while (k < 20)
-		{
-			if (i < 4 && tmp->p[j] != l)
-				ft_putchar(' ');
-			else if (tmp->p[j] == l)
-			{
-				ft_putchar('#');
-				l = 0;
-			}
-			else if (i == 4)
-			{
-				ft_putchar('\n');
-				i = 0;
-			}
-			else if (j == 3)
-				j = 0;
-			i++;
-			l++;
-			j++;
-			k++;
-		}
-		tmp = tmp->next;
-	}
 }

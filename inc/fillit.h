@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/25 12:55:50 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/25 15:31:09 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef	struct			s_list
 
 typedef	struct			s_tlist
 {
-	struct s_tetri		*hhead;
-	struct s_tetri		*ttail;
+	struct s_tetri		*head;
+	struct s_tetri		*tail;
 }						t_tlist;
 
 typedef struct			s_tetri
@@ -63,7 +63,7 @@ void					ttlist_delete(t_tlist **list);
 t_tlist					*append_tetri(t_tlist *list, int *data);
 t_tetri					*create_link(int *data);
 
-t_tlist					*add_tetriminos(char *file, t_tlist *list2);
+void					add_tetriminos(char *file, t_tlist *list2);
 void					print_tetriminos(t_tlist *list);
 
 #endif

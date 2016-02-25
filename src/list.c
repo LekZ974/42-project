@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 18:24:31 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/25 12:55:45 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/25 13:29:33 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ t_list	*push_back(t_list *list, int position)		// ajout fin de liste
 
 void	list_delete(t_list **list)				// suppression liste
 {
-	t_tetri	*tmp;
-	t_tetri	*del;
+	t_node	*tmp;
+	t_node	*del;
 
 	tmp = (*list)->head;
 	while (tmp)
@@ -84,8 +84,8 @@ void	list_delete(t_list **list)				// suppression liste
 
 void	ttlist_delete(t_tlist **list)				// suppression liste
 {
-	t_node	*tmp;
-	t_node	*del;
+	t_tetri	*tmp;
+	t_tetri	*del;
 
 	tmp = (*list)->head;
 	while (tmp)
@@ -101,13 +101,20 @@ void	ttlist_delete(t_tlist **list)				// suppression liste
 t_tetri		*create_link(int *data)
 {
 	t_tetri	*new;
+	int		i;
 
+	i = 0;
 	new = malloc(sizeof(*new));
 	if (new)
 	{
 		new->p[0] = data[0];
 		new->p[1] = data[1];
 		new->p[2] = data[2];
+		while (i < 3)
+		{
+			printf("new->p[%d] = %d\n", i, new->p[i]);
+			i++;
+		}
 		new->len_square = 0;
 		new->prev = NULL;
 		new->next = NULL;
@@ -121,19 +128,19 @@ t_tlist		*append_tetri(t_tlist *list, int *data)		// ajout fin de liste
 
 	new = create_link(data);
 	new->next = NULL;
-	if (list->ttail == NULL)
+	if (list->tail == NULL)
 	{
 		new->prev = NULL;
-		list->hhead = new;
-		list->ttail = new;
+		list->head = new;
+		list->tail = new;
 	}
 	else
 	{
-		list->ttail->next = new;
-		new->prev = list->ttail;
-		list->ttail = new;
+		list->tail->next = new;
+		new->prev = list->tail;
+		list->tail = new;
 	}
-	if (list->hhead == NULL)
-		list->hhead = new;
+	if (list->head == NULL)
+		list->head = new;
 	return (list);
 }

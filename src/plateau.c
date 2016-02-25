@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/25 12:53:26 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/25 17:12:07 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ int		open_close(char *file)
 	}
 	display_square(list1, res);
 	ft_putchar('\n');
-	print_tetriminos(list2);
-	list2 = add_tetriminos(file, list2);
+	add_tetriminos(file, list2);
 	printf("index : %d, nbT : %d\nracine nbT : %d\n", index, nbT, res);
 	printf("i : %d\n", i);
-	list_delete(&list1);			// suppression liste
-	ttlist_delete(&list2);			// suppression liste
+	list_delete(&list1);	// suppression liste
+	ttlist_delete(&list2);	// suppression liste
 	return (0);
 }
 
