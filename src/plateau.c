@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/26 12:18:22 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/26 15:14:11 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int		open_close(char *file)
 	square_converter(list2, res);
 	tmp = list1->head;
 	forme = list2->head;
-	backtracking(tmp, list1, list2, forme, letter);
+	printf("Jusque la tout va bien\n");
+	backtracking(tmp, list1, list2, forme);
+	printf("Et la tout va bien?\n");
 	display_square(list1, res);
 	printf("index : %d, nbT : %d\nracine nbT : %d\n", index, nbT, res);
 	printf("i : %d\n", i);

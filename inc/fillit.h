@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/26 12:17:48 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/26 15:10:14 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-typedef struct			s_node
+typedef struct			s_node						//structure plateau
 {
 	char				data;
 	int					pos;
@@ -29,19 +29,19 @@ typedef struct			s_node
 	struct s_node		*prev;	
 }						t_node;
 
-typedef	struct			s_list
+typedef	struct			s_list						//structure controle
 {
 	struct s_node		*head;
 	struct s_node		*tail;
 }						t_list;
 
-typedef	struct			s_tlist
+typedef	struct			s_tlist						//structure controle tetri
 {
 	struct s_tetri		*head;
 	struct s_tetri		*tail;
 }						t_tlist;
 
-typedef struct			s_tetri
+typedef struct			s_tetri						//structure tetri
 {
 	int					p[3];
 	struct s_tetri		*next;
@@ -67,5 +67,5 @@ void					print_tetriminos(t_tlist *list);
 
 void					square_converter(t_tlist *list, int res);	//backtrack.c
 int						non_present(t_node *elem, t_tetri *forme);
-int						backtracking(t_node *tmp, t_list *list1, t_tlist *list2, t_tetri *forme, char letter);
+int						backtracking(t_node *tmp, t_list *list1, t_tlist *list2, t_tetri *forme);
 #endif

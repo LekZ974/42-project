@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/02/26 12:24:30 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/26 15:23:46 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	square_converter(t_tlist *list, int res)
 	}
 }
 
-int		backtracking(t_node *tmp,t_list *list1, t_tlist *list2, t_tetri *forme, char letter)
+/*int		backtracking(t_node *tmp,t_list *list1, t_tlist *list2, t_tetri *forme, char letter)
 {
 	int			i;
 	int			j;
@@ -103,7 +103,7 @@ int		backtracking(t_node *tmp,t_list *list1, t_tlist *list2, t_tetri *forme, cha
 	printf("inwhile1 ok\n");
 	printf("while1 ok\n");
 	//tmp->data = '.';
-	/*while (tmp->next != NULL)
+	while (tmp->next != NULL)
 	{
 		if (forme->p[j] == i)
 		{
@@ -115,7 +115,38 @@ int		backtracking(t_node *tmp,t_list *list1, t_tlist *list2, t_tetri *forme, cha
 			j = 0;
 		tmp = tmp->next;
 		i++;
-	}*/
+	}
 	printf("end\n");
 	return (1);
+}*/
+
+int		backtracking(t_node *tmp, t_list *list1, t_tlist *list2, t_tetri *forme)
+{
+	t_node		*elem;
+
+	elem = tmp->next;
+	printf("0\n");
+	if (tmp == NULL)
+	{
+		printf("1\n");
+		return (0);
+	}
+	if (tmp->data != '.')
+	{
+		printf("2\n");
+		return (backtracking(tmp->next, list1, list2, forme->next));
+	}
+	if (non_present(elem, forme))
+	{
+		printf("3\n");
+		forme = forme->next;
+	}
+	if (backtracking(tmp->next, list1, list2, forme->next))
+	{
+		printf("4\n");
+		return (0);
+	}
+	tmp = list1->head;
+	return (1);
+	printf("5\n");
 }
