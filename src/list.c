@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 18:24:31 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/25 13:29:33 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/26 11:01:47 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,21 +101,13 @@ void	ttlist_delete(t_tlist **list)				// suppression liste
 t_tetri		*create_link(int *data)
 {
 	t_tetri	*new;
-	int		i;
 
-	i = 0;
 	new = malloc(sizeof(*new));
 	if (new)
 	{
 		new->p[0] = data[0];
 		new->p[1] = data[1];
 		new->p[2] = data[2];
-		while (i < 3)
-		{
-			printf("new->p[%d] = %d\n", i, new->p[i]);
-			i++;
-		}
-		new->len_square = 0;
 		new->prev = NULL;
 		new->next = NULL;
 	}

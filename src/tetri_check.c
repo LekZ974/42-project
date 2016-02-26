@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 15:40:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/25 17:11:56 by ggane            ###   ########.fr       */
+/*   Updated: 2016/02/26 11:02:25 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	add_tetriminos(char *file, t_tlist *list2)
 			{
 				if (s == 1)
 				{
-					printf("%d\n", k);
 					tab[k] = l;
 					l = 0;
 					k++;
