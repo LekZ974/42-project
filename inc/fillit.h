@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/26 12:17:48 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/06 09:42:14 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void					print_tetriminos(t_tlist *list);
 
 void					square_converter(t_tlist *list, int res);	//backtrack.c
 int						non_present(t_node *elem, t_tetri *forme);
-int						backtracking(t_node *tmp, t_list *list1, t_tlist *list2, t_tetri *forme, char letter);
+void					design_letters(t_node *tmp, t_tetri *forme, char letter);
+int						backtracking(t_list *list1, t_tlist *list2, char letter);
 #endif

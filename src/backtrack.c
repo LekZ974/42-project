@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/02/26 12:24:30 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/06 09:44:51 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@ int		non_present(t_node *elem, t_tetri *forme)
 	j = 0;
 	while (elem)
 	{
-		while (j < 3)
+		if (forme->p[j] == i)
 		{
-			if (forme->p[j] == i)
-			{
-				if (elem->data != '.')
-					return (0);
-				i = 0;
-			}
+			if (elem->data != '.')
+				return (0);
+			i = 0;
 			j++;
 		}
+		if (j == 2)
+			j = 0;
 		j = 0;
 		elem = elem->next;
 		i++;
@@ -58,56 +57,19 @@ void	square_converter(t_tlist *list, int res)
 	}
 }
 
-int		backtracking(t_node *tmp,t_list *list1, t_tlist *list2, t_tetri *forme, char letter)
+void	design_letters(t_node *tmp, t_tetri *forme, char letter)
 {
-	int			i;
-	int			j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	letter = 'A';
-	printf("start_backtrack\n");
-	if (tmp == NULL)		//si liste parcourue entierement
-		return (0);
-	printf("if1 ok\n");
-	if (tmp->data != '.' && tmp != NULL)	//si cellule pas vide
-	{		
-		printf("backtracking\n");
-		return (backtracking(tmp->next, list1, list2, forme->next, letter++) == 0);
-	}
-	printf("if2 ok\n");
-	if (non_present(tmp, forme) != 0)   //check obstacle
-	{
-		tmp->data = letter;
-		while (tmp != NULL)
-		{
-			if (forme->p[j] == i)
-			{
-				tmp->data = letter;
-				i = 0;
-				j++;
-				printf("BBBBBBBBB\n");
-			}
-			if (j == 2)
-				j = 0;
-			tmp = tmp->next;
-			i++;
-		printf("AAAAAAAA\n");
-		}
-		tmp = list1->head;
-		if (backtracking(tmp->next, list1, list2, forme->next, letter++) == 0)	//si ok
-		{
-			return (0);
-		}
-	}
-	printf("inwhile1 ok\n");
-	printf("while1 ok\n");
-	//tmp->data = '.';
-	/*while (tmp->next != NULL)
+	tmp->data = letter;
+	while (tmp)
 	{
 		if (forme->p[j] == i)
 		{
-			tmp->data = '.';
+			tmp->data = letter;
 			i = 0;
 			j++;
 		}
@@ -115,7 +77,30 @@ int		backtracking(t_node *tmp,t_list *list1, t_tlist *list2, t_tetri *forme, cha
 			j = 0;
 		tmp = tmp->next;
 		i++;
+	}
+}
+
+int		backtracking(t_list *list1, t_tlist *list2, char letter)
+{
+	t_node	*tmp;
+	t_tetri	*forme;
+
+	tmp = list1->head;
+	forme = list2->head;
+	/*while (tmp)
+	{
+		tmp2 = tmp;
+		tmp3 = tmp;
+		if (tmp->data == '.' && non_present(tmp2, forme) != 0)
+		{
+			design_letters(tmp3, forme, letter);
+			letter++;
+			if (forme->next)
+				forme = forme->next;
+		}
+		tmp = tmp->next;
 	}*/
-	printf("end\n");
+
+	design_letters(tmp, forme, letter);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 17:27:03 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/22 19:54:16 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/03/06 08:53:15 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,4 @@ void	display_square(t_list *list, int res)
 		tmp = tmp->next;
 		j++;
 	}
-	printf("j = %d\n", j);
 }
