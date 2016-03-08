@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/08 15:39:52 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 17:26:53 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,13 @@ void	design_letters(t_node *tmp, t_tetri *forme, char letter)
 int		backtracking(t_node *tmp, t_tetri *forme, int *tab, int i, char letter)
 {
 	if (tmp == NULL)
-		return (0);
+	{
+		printf("job done\n");
+		exit (0);
+	}
 	if (tmp->data != '.' && tmp->next != NULL)
 	{
 		return (backtracking(tmp->next, forme, tab, i, letter));
-	}
-	if (tmp->pos == tab[i])
-	{
-		design_letters(tmp, forme->prev, '.');
 	}
 	if (tmp->data == '.')
 	{
@@ -101,10 +100,6 @@ int		backtracking(t_node *tmp, t_tetri *forme, int *tab, int i, char letter)
 			{
 				return (backtracking(tmp->next, forme->next, tab, i, letter));
 			}
-		}
-		else
-		{
-			return (backtracking(tmp->prev, forme, tab, i - 1, letter));
 		}
 	}
 	tmp->data = 'X';
