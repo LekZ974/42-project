@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/06 09:44:51 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 12:26:06 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	square_converter(t_tlist *list, int res)
 	{
 		while (i < 3)
 		{
-			if (tmp->p[i] >= 4)
-				tmp->p[i] += res;
+			if (tmp->p[i] >= 4 && res > 4)
+				tmp->p[i] = tmp->p[i] + (res - 4);
 			i++;
 		}
 		i = 0;
@@ -73,8 +73,8 @@ void	design_letters(t_node *tmp, t_tetri *forme, char letter)
 			i = 0;
 			j++;
 		}
-		if (j == 2)
-			j = 0;
+		if (j == 3)
+			break ;
 		tmp = tmp->next;
 		i++;
 	}

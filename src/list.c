@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 18:24:31 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/02 14:31:00 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 10:57:36 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ t_tlist	*create_ttlist(void)								// creation liste
 	return (list);
 }
 
-t_list	*push_back(t_list *list, int position)		// ajout fin de liste
+t_list	*push_back(t_list *list, int position, char data)	// ajout fin de liste
 {
 	t_node	*new;
 
 	new = malloc(sizeof(*new));
 	if (new)
 	{
-		new->data = '.';
+		new->data = data;
 		new->pos = position;
 		new->next = NULL;
 		if (list->tail == NULL)

@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/06 09:59:08 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 12:20:53 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		open_close(char *file)
 	int		i;
 	int		j;
 	int		k;
+	int		l;
 	int		nbT;
 	int		res;
 	t_list	*list1;
@@ -42,15 +43,26 @@ int		open_close(char *file)
 	close(fd);
 	nbT = (index / 5) + 1;
 	res = ft_sqrt(nbT * 4);		// res = cote carre
+	l = 1;
 	while (i < (res * res))		// creation plateau avec liste doublechaine
 	{
-		list1 = push_back(list1, i);
+		list1 = push_back(list1, i, '.');
+		if (l == res)
+		{
+			list1 = push_back(list1, i, '\n');
+			l = 0;
+		}
+		l++;
 		i++;
 	}
 	add_tetriminos(file, list2);
-	//square_converter(list2, res);
+	printf("coordonnees tetriminos sur carre 4 x 4\n\n");
+	affiche_coord(list2);
+	square_converter(list2, res);
 	backtracking(list1, list2, letter);
-	display_square(list1, res);
+	printf("coordonnees tetriminos sur carre %d x %d\n\n", res, res);
+	affiche_coord(list2);
+	display_square(list1);
 	list_delete(&list1);	// suppression liste
 	ttlist_delete(&list2);	// suppression liste
 	return (0);

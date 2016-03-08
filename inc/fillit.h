@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/06 09:42:14 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 11:24:25 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ typedef struct			s_tetri
 int						open_close(char *file);					// plateau.c
 int						ft_sqrt(int nb);
 
-void					display_square(t_list *list, int res);	//display.c
+void					display_square(t_list *list);	//display.c
 void					ft_putchar(char c);
 
 t_list					*create_list(void);						// list.c
 t_tlist					*create_ttlist(void);						// list.c
-t_list					*push_back(t_list *list, int position);
+t_list					*push_back(t_list *list, int position, char data);
 void					list_delete(t_list **list);
 void					ttlist_delete(t_tlist **list);
 t_tlist					*append_tetri(t_tlist *list, int *data);
@@ -69,4 +69,6 @@ void					square_converter(t_tlist *list, int res);	//backtrack.c
 int						non_present(t_node *elem, t_tetri *forme);
 void					design_letters(t_node *tmp, t_tetri *forme, char letter);
 int						backtracking(t_list *list1, t_tlist *list2, char letter);
+
+void					affiche_coord(t_tlist *list); // tmp.c
 #endif

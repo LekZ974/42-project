@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.c                                          :+:      :+:    :+:   */
+/*   tmp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/22 17:27:03 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/08 11:24:39 by ggane            ###   ########.fr       */
+/*   Created: 2016/03/08 10:23:18 by ggane             #+#    #+#             */
+/*   Updated: 2016/03/08 10:39:49 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_putchar(char c)
+void	affiche_coord(t_tlist *list)
 {
-	write(1, &c, 1);
-}
-
-void	display_square(t_list *list)
-{
-	t_node	*tmp;
+	t_tetri		*tmp;
+	int			i;
 
 	tmp = list->head;
+	i = 0;
 	while (tmp)
 	{
-		ft_putchar(tmp->data);
+		while (i < 3)
+		{
+			printf("forme->p[%d] : %d\n", i, tmp->p[i]);
+			i++;
+		}
+		printf("\n");
+		i = 0;
 		tmp = tmp->next;
 	}
 }
