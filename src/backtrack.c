@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/08 12:26:06 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 15:39:52 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ int		non_present(t_node *elem, t_tetri *forme)
 			i = 0;
 			j++;
 		}
-		if (j == 2)
-			j = 0;
-		j = 0;
+		if (j == 3)
+			break ;
 		elem = elem->next;
 		i++;
 	}
@@ -80,27 +79,45 @@ void	design_letters(t_node *tmp, t_tetri *forme, char letter)
 	}
 }
 
-int		backtracking(t_list *list1, t_tlist *list2, char letter)
+int		backtracking(t_node *tmp, t_tetri *forme, int *tab, int i, char letter)
 {
-	t_node	*tmp;
-	t_tetri	*forme;
-
-	tmp = list1->head;
-	forme = list2->head;
-	/*while (tmp)
+	if (tmp == NULL)
+		return (0);
+	if (tmp->data != '.' && tmp->next != NULL)
 	{
-		tmp2 = tmp;
-		tmp3 = tmp;
-		if (tmp->data == '.' && non_present(tmp2, forme) != 0)
+		return (backtracking(tmp->next, forme, tab, i, letter));
+	}
+	if (tmp->pos == tab[i])
+	{
+		design_letters(tmp, forme->prev, '.');
+	}
+	if (tmp->data == '.')
+	{
+		if (non_present(tmp, forme))
 		{
-			design_letters(tmp3, forme, letter);
-			letter++;
-			if (forme->next)
-				forme = forme->next;
+			tab[i++] = tmp->pos;	
+			design_letters(tmp, forme, letter++);
+			if (tmp->next != NULL && forme->next != NULL)
+			{
+				return (backtracking(tmp->next, forme->next, tab, i, letter));
+			}
 		}
-		tmp = tmp->next;
-	}*/
-
-	design_letters(tmp, forme, letter);
+		else
+		{
+			return (backtracking(tmp->prev, forme, tab, i - 1, letter));
+		}
+	}
+	tmp->data = 'X';
+	//design_letters(tmp, forme, letter);
 	return (1);
+}
+
+int		*stocke_nbT(int nbT)
+{
+	int	*tab;
+
+	tab = (int*)malloc(sizeof(int) * nbT);
+	if (tab)
+		return (tab);
+	return (NULL);
 }

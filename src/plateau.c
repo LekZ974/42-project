@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/08 12:20:53 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/08 15:40:01 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,22 @@ int		open_close(char *file)
 	int		j;
 	int		k;
 	int		l;
+	int		m;
 	int		nbT;
 	int		res;
 	t_list	*list1;
 	t_tlist	*list2;
+	t_node	*tmp;
+	t_tetri *forme;
 	char	buf[BUF_SIZE];
 	char	letter;
+	int		*tab;
 
 	index = 0;
 	i = 0;
 	j = 0;
 	k = 0;
+	m = 0;
 	letter = 'A';
 	list1 = create_list(); //donne acces a liste plateau
 	list2 = create_ttlist(); //donne acces a liste tetriminos
@@ -59,12 +64,16 @@ int		open_close(char *file)
 	printf("coordonnees tetriminos sur carre 4 x 4\n\n");
 	affiche_coord(list2);
 	square_converter(list2, res);
-	backtracking(list1, list2, letter);
+	tmp = list1->head;
+	forme = list2->head;
+	tab = stocke_nbT(nbT);
+	backtracking(tmp, forme, tab, m, letter);
 	printf("coordonnees tetriminos sur carre %d x %d\n\n", res, res);
 	affiche_coord(list2);
 	display_square(list1);
 	list_delete(&list1);	// suppression liste
 	ttlist_delete(&list2);	// suppression liste
+	free(tab); // suppression tab
 	return (0);
 }
 
