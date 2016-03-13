@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/08 15:40:01 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/09 14:46:49 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		open_close(char *file)
 	}
 	close(fd);
 	nbT = (index / 5) + 1;
+	//nbT = 20;
 	res = ft_sqrt(nbT * 4);		// res = cote carre
 	l = 1;
 	while (i < (res * res))		// creation plateau avec liste doublechaine

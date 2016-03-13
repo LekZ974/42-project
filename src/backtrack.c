@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/08 17:26:53 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/09 14:12:20 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		non_present(t_node *elem, t_tetri *forme)
 		if (forme->p[j] == i)
 		{
 			if (elem->data != '.')
+				return (0);
+			if (elem == NULL)
 				return (0);
 			i = 0;
 			j++;
@@ -87,22 +89,26 @@ int		backtracking(t_node *tmp, t_tetri *forme, int *tab, int i, char letter)
 		exit (0);
 	}
 	if (tmp->data != '.' && tmp->next != NULL)
-	{
 		return (backtracking(tmp->next, forme, tab, i, letter));
-	}
 	if (tmp->data == '.')
 	{
 		if (non_present(tmp, forme))
 		{
-			tab[i++] = tmp->pos;	
+			tab[i++] = tmp->pos		;
 			design_letters(tmp, forme, letter++);
 			if (tmp->next != NULL && forme->next != NULL)
 			{
 				return (backtracking(tmp->next, forme->next, tab, i, letter));
 			}
 		}
+		else if (non_present(tmp, forme) == 0)
+		{
+			if (tmp->next)
+				return (backtracking(tmp->next, forme, tab, i, letter));
+		}
 	}
-	tmp->data = 'X';
+	//if (tmp)
+	//	tmp->data = 'X';
 	//design_letters(tmp, forme, letter);
 	return (1);
 }
@@ -115,4 +121,4 @@ int		*stocke_nbT(int nbT)
 	if (tab)
 		return (tab);
 	return (NULL);
-}
+} 
