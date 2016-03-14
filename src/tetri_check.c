@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 15:40:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/02/26 11:02:25 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/14 17:44:27 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	add_tetriminos(char *file, t_tlist *list2)
 	int		l;
 	int		j;
 	int		s;
+	int		nb;
+	char	letter;
 	int		tab[3];
 	char	buf[BUF_SIZE];
 	char	*new_buf;
@@ -29,6 +31,8 @@ void	add_tetriminos(char *file, t_tlist *list2)
 	l = 0;
 	s = 0;
 	j = 0;
+	nb = 1;
+	letter = 'A';
 	fd = open(file, O_RDONLY);
 	while (read(fd, buf, 1))
 		i++;
@@ -56,7 +60,7 @@ void	add_tetriminos(char *file, t_tlist *list2)
 				l++;
 			if (k == 3)
 			{
-				list2 = append_tetri(list2, tab);
+				list2 = append_tetri(list2, tab, nb++, letter++);
 				k = 0;
 			}
 			if (new_buf[j] == '\n' && new_buf[j + 1] == '\n')

@@ -6,35 +6,39 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/09 14:12:20 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/14 18:35:41 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		non_present(t_node *elem, t_tetri *forme)
+int		is_placeable(t_node *tmp, t_tetri *forme, char c)
 {
 	int			i;
 	int			j;
 
 	i = 0;
 	j = 0;
-	while (elem)
+	if (tmp->data != c)
+		return (0);
+	while (tmp)
 	{
-		if (forme->p[j] == i)
+		if (forme->coordonnees[j] == i)
 		{
-			if (elem->data != '.')
+			if (tmp->data != c)
 				return (0);
-			if (elem == NULL)
+			if (tmp == NULL)
 				return (0);
 			i = 0;
 			j++;
 		}
 		if (j == 3)
 			break ;
-		elem = elem->next;
+		tmp = tmp->next;
 		i++;
 	}
+	if (tmp == NULL && j < 3)
+		return (0);
 	return (1);
 }
 
@@ -49,8 +53,8 @@ void	square_converter(t_tlist *list, int res)
 	{
 		while (i < 3)
 		{
-			if (tmp->p[i] >= 4 && res > 4)
-				tmp->p[i] = tmp->p[i] + (res - 4);
+			if (tmp->coordonnees[i] >= 4 && res > 4)
+				tmp->coordonnees[i] = tmp->coordonnees[i] + (res - 4);
 			i++;
 		}
 		i = 0;
@@ -66,9 +70,10 @@ void	design_letters(t_node *tmp, t_tetri *forme, char letter)
 	i = 0;
 	j = 0;
 	tmp->data = letter;
+	forme->position = tmp->position;
 	while (tmp)
 	{
-		if (forme->p[j] == i)
+		if (forme->coordonnees[j] == i)
 		{
 			tmp->data = letter;
 			i = 0;
@@ -81,44 +86,50 @@ void	design_letters(t_node *tmp, t_tetri *forme, char letter)
 	}
 }
 
-int		backtracking(t_node *tmp, t_tetri *forme, int *tab, int i, char letter)
+int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 {
-	if (tmp == NULL)
+	if (forme == NULL)
 	{
 		printf("job done\n");
-		exit (0);
+		return (0);
 	}
-	if (tmp->data != '.' && tmp->next != NULL)
-		return (backtracking(tmp->next, forme, tab, i, letter));
-	if (tmp->data == '.')
+	while (is_placeable(tmp, forme, '.')) // place forme a emplacement precis
 	{
-		if (non_present(tmp, forme))
-		{
-			tab[i++] = tmp->pos		;
-			design_letters(tmp, forme, letter++);
-			if (tmp->next != NULL && forme->next != NULL)
-			{
-				return (backtracking(tmp->next, forme->next, tab, i, letter));
-			}
-		}
-		else if (non_present(tmp, forme) == 0)
-		{
-			if (tmp->next)
-				return (backtracking(tmp->next, forme, tab, i, letter));
-		}
+		design_letters(tmp, forme, forme->letter);
+		return (backtracking(list, flist, tmp->next, forme->next));
 	}
-	//if (tmp)
-	//	tmp->data = 'X';
-	//design_letters(tmp, forme, letter);
-	return (1);
+	if (is_placeable(tmp, forme, '.') == 0 && tmp->next != NULL) // essaie de placer forme actuelle a position + 1
+	{
+		printf("\n1er if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
+		return (backtracking(list, flist, tmp->next, forme));
+	}
+	if (is_placeable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
+	{
+		tmp = tetriminos_prev(list, tmp, forme->prev);
+		printf("\n2nd if\ntmp->position : %d\nforme->nb : %d\nletter - 1 : %c\n", tmp->position, forme->prev->nb, forme->prev->letter);
+		if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
+		{
+			printf("if debut\n");
+			design_letters(tmp, forme->prev, '.');
+			printf("if fin\n");
+		}
+		if (tmp->next != NULL && forme->prev != flist->head)
+			return (backtracking(list, flist, tmp->next, forme->prev));
+	}
+	//tmp->data = 'X';
+	return (0);
 }
 
-int		*stocke_nbT(int nbT)
+t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
 {
-	int	*tab;
+	int		i = 1;
 
-	tab = (int*)malloc(sizeof(int) * nbT);
-	if (tab)
-		return (tab);
-	return (NULL);
-} 
+	while (forme->position != tmp->position && tmp->prev != list->head)
+	{
+		tmp = tmp->prev;
+		i++;
+	}
+	printf("tours tetriminos_prev : %d\n", i);
+	//tmp->data = 'Z';
+	return (tmp);
+}

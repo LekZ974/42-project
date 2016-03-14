@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 18:24:31 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/08 10:57:36 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/14 17:42:47 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_list	*push_back(t_list *list, int position, char data)	// ajout fin de liste
 	if (new)
 	{
 		new->data = data;
-		new->pos = position;
+		new->position = position;
 		new->next = NULL;
 		if (list->tail == NULL)
 		{
@@ -105,16 +105,19 @@ t_tetri		*create_link(int *data)
 	new = malloc(sizeof(*new));
 	if (new)
 	{
-		new->p[0] = data[0];
-		new->p[1] = data[1];
-		new->p[2] = data[2];
+		new->coordonnees[0] = data[0];
+		new->coordonnees[1] = data[1];
+		new->coordonnees[2] = data[2];
+		new->nb = 0;
+		new->position = 0;
+		new->letter = 'A';
 		new->prev = NULL;
 		new->next = NULL;
 	}
 	return (new);
 }
 
-t_tlist		*append_tetri(t_tlist *list, int *data)		// ajout fin de liste
+t_tlist		*append_tetri(t_tlist *list, int *data, int nb, char letter)		// ajout fin de liste
 {
 	t_tetri		*new;
 
@@ -134,5 +137,7 @@ t_tlist		*append_tetri(t_tlist *list, int *data)		// ajout fin de liste
 	}
 	if (list->head == NULL)
 		list->head = new;
+	new->nb = nb;
+	new->letter = letter;
 	return (list);
 }

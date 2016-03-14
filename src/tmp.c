@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/08 10:23:18 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/08 10:39:49 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/14 17:40:11 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	affiche_coord(t_tlist *list)
 	i = 0;
 	while (tmp)
 	{
+		printf("forme->nb : %d\n", tmp->nb);
+		printf("forme->position : %d\n", tmp->position);
+		printf("forme->letter : %c\n", tmp->letter);
 		while (i < 3)
 		{
-			printf("forme->p[%d] : %d\n", i, tmp->p[i]);
+			printf("forme->coordonnees[%d] : %d\n", i, tmp->coordonnees[i]);
 			i++;
 		}
 		printf("\n");
