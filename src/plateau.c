@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/14 17:39:09 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/14 18:58:49 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		open_close(char *file)
 	k = 0;
 	list1 = create_list(); //donne acces a liste plateau
 	list2 = create_ttlist(); //donne acces a liste tetriminos
-	fd = open(file, O_RDONLY);	//lecture fichier 
+	fd = open(file, O_RDONLY);	//lecture fichier
 	while (read(fd, buf, 1))
 	{
 		if (buf[0] == '\n')
@@ -69,6 +69,10 @@ int		open_close(char *file)
 	list_delete(&list1);	// suppression liste
 	ttlist_delete(&list2);	// suppression liste
 	return (0);
+}
+
+t_list	*dessine_carre(in)
+{
 }
 
 int		ft_sqrt(int nb)

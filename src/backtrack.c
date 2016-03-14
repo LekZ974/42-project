@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/14 18:35:41 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/14 18:51:31 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
 {
 	int		i = 1;
-
 	while (forme->position != tmp->position && tmp->prev != list->head)
 	{
 		tmp = tmp->prev;
