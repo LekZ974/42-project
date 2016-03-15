@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/15 19:28:18 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 19:59:11 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 	}
 	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
 	{
-		tmp = tetriminos_prev(list, tmp, forme->prev);
+		Table_rase(list, forme->prev);
+		tmp = Forme_Prev(list, tmp, forme->prev);
 		printf("\ntentative placement : %c : TOTAL FAIL !!!\n\n", forme->letter);
 		if (Est_Dessinable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
 		{
@@ -124,7 +125,7 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 	return (0);
 }
 
-t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
+t_node	*Forme_Prev(t_list *list, t_node *tmp, t_tetri *forme)
 {
 	while (forme->position != tmp->position && tmp->prev != list->head->prev)
 		tmp = tmp->prev;
@@ -142,4 +143,25 @@ t_list	*Carre_Sup(t_list *list)
 	list = create_list();
 	list = dessine_carre(list, cote + 1);
 	return (list);
+}
+
+void	Table_Rase(t_list *list, t_tlist *flist)
+{
+	t_node	*tmp;
+	t_tetri *forme;
+
+	tmp = list->head;
+	forme = flist->head;
+	while (tmp)
+	{
+		while (forme)
+		{
+			if (tmp->data == forme->letter)
+				tmp->data = '.';
+			forme = forme->next;
+		}
+		forme = flist->head;
+		tmp = tmp->next;
+	}
+	tmp = list->head;
 }
