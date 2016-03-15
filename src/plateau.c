@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/14 18:58:49 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 00:41:49 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		open_close(char *file)
 	int		i;
 	int		j;
 	int		k;
-	int		l;
 	int		nbT;
 	int		res;
 	t_list	*list1;
@@ -42,24 +41,12 @@ int		open_close(char *file)
 	}
 	close(fd);
 	nbT = (index / 5) + 1;
-	//nbT = 20;
 	res = ft_sqrt(nbT * 4);		// res = cote carre
-	l = 1;
-	while (i < (res * res))		// creation plateau avec liste doublechaine
-	{
-		list1 = push_back(list1, i, '.');
-		if (l == res)
-		{
-			list1 = push_back(list1, i, '\n');
-			l = 0;
-		}
-		l++;
-		i++;
-	}
+	list1 = dessine_carre(list1, res);
 	add_tetriminos(file, list2);
 	printf("coordonnees tetriminos sur carre 4 x 4\n\n");
 	affiche_coord(list2);
-	square_converter(list2, res);
+	square_converter(list2, 4, res);
 	tmp = list1->head;
 	forme = list2->head;
 	backtracking(list1, list2, tmp, forme);
@@ -71,8 +58,25 @@ int		open_close(char *file)
 	return (0);
 }
 
-t_list	*dessine_carre(in)
+t_list	*dessine_carre(t_list *list, int res)
 {
+	int		i;
+	int		l;
+
+	i = 0;
+	l = 1;
+	while (i < (res * res))		// creation plateau avec liste doublechaine
+	{
+		list = push_back(list, i, '.', res);
+		if (l == res)
+		{
+			list = push_back(list, i, '\n', res);
+			l = 0;
+		}
+		l++;
+		i++;
+	}
+	return (list);
 }
 
 int		ft_sqrt(int nb)

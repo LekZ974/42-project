@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/14 17:44:42 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 00:48:53 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct			s_node
 {
 	char				data;
 	int					position;
+	int					cote;
 	struct s_node		*next;
 	struct s_node		*prev;	
 }						t_node;
@@ -53,13 +54,14 @@ typedef struct			s_tetri
 
 int						open_close(char *file);					// plateau.c
 int						ft_sqrt(int nb);
+t_list					*dessine_carre(t_list *list, int res);
 
 void					display_square(t_list *list);	//display.c
 void					ft_putchar(char c);
 
 t_list					*create_list(void);						// list.c
-t_tlist					*create_ttlist(void);						// list.c
-t_list					*push_back(t_list *list, int position, char data);
+t_tlist					*create_ttlist(void);
+t_list					*push_back(t_list *list, int position, char data, int res);
 void					list_delete(t_list **list);
 void					ttlist_delete(t_tlist **list);
 t_tlist					*append_tetri(t_tlist *list, int *data, int nb, char letter);
@@ -68,11 +70,12 @@ t_tetri					*create_link(int *data);
 void					add_tetriminos(char *file, t_tlist *list2);	//tetri_check.c
 void					print_tetriminos(t_tlist *list);
 
-void					square_converter(t_tlist *list, int res);	//backtrack.c
+void					square_converter(t_tlist *list, int cote1, int cote2);	//backtrack.c
 int						is_placeable(t_node *elem, t_tetri *forme, char c);
 void					design_letters(t_node *tmp, t_tetri *forme, char letter);
 int						backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme);
 t_node					*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme);
+t_list					*carre_plus_grand(t_list *list);
 
 void					affiche_coord(t_tlist *list); // tmp.c
 #endif

@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/14 18:51:31 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 00:59:33 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		is_placeable(t_node *tmp, t_tetri *forme, char c)
 	return (1);
 }
 
-void	square_converter(t_tlist *list, int res)
+void	square_converter(t_tlist *list, int cote1, int cote2)
 {
 	t_tetri		*tmp;
 	int			i;
@@ -53,8 +53,8 @@ void	square_converter(t_tlist *list, int res)
 	{
 		while (i < 3)
 		{
-			if (tmp->coordonnees[i] >= 4 && res > 4)
-				tmp->coordonnees[i] = tmp->coordonnees[i] + (res - 4);
+			if (tmp->coordonnees[i] > 1 && cote2 > cote1)
+				tmp->coordonnees[i] = tmp->coordonnees[i] + (cote2 - cote1);
 			i++;
 		}
 		i = 0;
@@ -100,21 +100,34 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 	}
 	if (is_placeable(tmp, forme, '.') == 0 && tmp->next != NULL) // essaie de placer forme actuelle a position + 1
 	{
-		printf("\n1er if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
+		//printf("\n1er if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
 		return (backtracking(list, flist, tmp->next, forme));
 	}
 	if (is_placeable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
 	{
-		tmp = tetriminos_prev(list, tmp, forme->prev);
-		printf("\n2nd if\ntmp->position : %d\nforme->nb : %d\nletter - 1 : %c\n", tmp->position, forme->prev->nb, forme->prev->letter);
-		if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
+		if (forme->nb > 1)
 		{
-			printf("if debut\n");
-			design_letters(tmp, forme->prev, '.');
-			printf("if fin\n");
+			tmp = tetriminos_prev(list, tmp, forme->prev);
+			//printf("\n2nd if\ntmp->position : %d\nforme->nb : %d\nletter - 1 : %c\n", tmp->position, forme->prev->nb, forme->prev->letter);
+			if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
+			{
+				//printf("if debut\n");
+				design_letters(tmp, forme->prev, '.');
+				//printf("if fin\n");
+			}
+			if (tmp->next != NULL && forme->prev != flist->head)
+				return (backtracking(list, flist, tmp->next, forme->prev));
 		}
-		if (tmp->next != NULL && forme->prev != flist->head)
-			return (backtracking(list, flist, tmp->next, forme->prev));
+		else if (forme->prev->nb == 1)
+		{
+			list = carre_plus_grand(list);
+			tmp = list->head;
+			square_converter(flist, tmp->cote - 1, tmp->cote);
+			forme = flist->head;
+			printf("\n3eme if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
+			affiche_coord(flist);
+			return (backtracking(list, flist, tmp, forme));
+		}
 	}
 	//tmp->data = 'X';
 	return (0);
@@ -131,4 +144,17 @@ t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
 	printf("tours tetriminos_prev : %d\n", i);
 	//tmp->data = 'Z';
 	return (tmp);
+}
+
+t_list	*carre_plus_grand(t_list *list)
+{
+	int		cote;
+	t_node	*tmp;
+
+	tmp = list->head;
+	cote = tmp->cote;
+	list_delete(&list);
+	list = create_list();
+	list = dessine_carre(list, cote + 1);
+	return (list);
 }
