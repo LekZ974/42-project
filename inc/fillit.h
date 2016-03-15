@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/15 00:48:53 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 19:28:15 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void					add_tetriminos(char *file, t_tlist *list2);	//tetri_check.c
 void					print_tetriminos(t_tlist *list);
 
 void					square_converter(t_tlist *list, int cote1, int cote2);	//backtrack.c
-int						is_placeable(t_node *elem, t_tetri *forme, char c);
-void					design_letters(t_node *tmp, t_tetri *forme, char letter);
+int						Est_Dessinable(t_node *elem, t_tetri *forme, char c);
+void					Dessine_Forme(t_node *tmp, t_tetri *forme, char letter);
 int						backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme);
 t_node					*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme);
-t_list					*carre_plus_grand(t_list *list);
+t_list					*Carre_Sup(t_list *list);
 
 void					affiche_coord(t_tlist *list); // tmp.c
 #endif

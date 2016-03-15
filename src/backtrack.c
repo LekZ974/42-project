@@ -6,13 +6,13 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/15 19:04:26 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 19:28:18 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		is_placeable(t_node *tmp, t_tetri *forme, char c)
+int		Est_Dessinable(t_node *tmp, t_tetri *forme, char c)
 {
 	int			i;
 	int			j;
@@ -64,7 +64,7 @@ void	square_converter(t_tlist *list, int cote1, int cote2)
 	}
 }
 
-void	design_letters(t_node *tmp, t_tetri *forme, char letter)
+void	Dessine_Forme(t_node *tmp, t_tetri *forme, char letter)
 {
 	int		i;
 	int		j;
@@ -95,29 +95,29 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 		printf("job done\n\n");
 		return (0);
 	}
-	while (is_placeable(tmp, forme, '.') != 0 || is_placeable(tmp, forme, forme->letter) != 0) // place forme a emplacement precis
+	while (Est_Dessinable(tmp, forme, '.') != 0 || Est_Dessinable(tmp, forme, forme->letter) != 0) // place forme a emplacement precis
 	{
 		printf("\nplacement : %c en position : %d SUCCESS !!!\n\n", forme->letter, tmp->position);
-		design_letters(tmp, forme, forme->letter);
+		Dessine_Forme(tmp, forme, forme->letter);
 		return (backtracking(list, flist, tmp->next, forme->next));
 	}
-	if (is_placeable(tmp, forme, '.') == 0 && tmp->next != NULL) // essaie de placer forme actuelle a position + 1
+	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next != NULL) // essaie de placer forme actuelle a position + 1
 	{
 		printf("tentative placement : %c en position : %d failed\n", forme->letter, tmp->position);
 		return (backtracking(list, flist, tmp->next, forme));
 	}
-	if (is_placeable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
+	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
 	{
 		tmp = tetriminos_prev(list, tmp, forme->prev);
 		printf("\ntentative placement : %c : TOTAL FAIL !!!\n\n", forme->letter);
-		if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
+		if (Est_Dessinable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
 		{
-			design_letters(tmp, forme->prev, '.');
+			Dessine_Forme(tmp, forme->prev, '.');
 			printf("effacement : %c ok\n", forme->prev->letter);
 		}
 		if (tmp->next != NULL && forme->prev != flist->head->prev)
 		{
-			printf("tentative placement : %c en position : %d\n", forme->prev->letter, tmp->next->position);
+			printf("deplacement : %c en position : %d\n", forme->prev->letter, tmp->next->position);
 			return (backtracking(list, flist, tmp->next, forme->prev));
 		}
 	}
@@ -131,7 +131,7 @@ t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
 	return (tmp);
 }
 
-t_list	*carre_plus_grand(t_list *list)
+t_list	*Carre_Sup(t_list *list)
 {
 	int		cote;
 	t_node	*tmp;
