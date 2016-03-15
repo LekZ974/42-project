@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/15 00:59:33 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 15:37:14 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,35 @@ int		is_placeable(t_node *tmp, t_tetri *forme, char c)
 
 	i = 0;
 	j = 0;
-	if (tmp->data != c)
-		return (0);
+	if (tmp->data == forme->letter)
+		tmp = tmp->next;
+	else if (tmp->data != c)
+	{
+		if (tmp->data != '.')
+		{
+			printf("premier charactere\n");
+			return (0);
+		}
+	}
 	while (tmp)
 	{
 		if (forme->coordonnees[j] == i)
 		{
-			if (tmp->data != c)
-				return (0);
+			if (tmp->data == forme->letter)
+			{
+				tmp = tmp->next;
+			}
+			else if (tmp->data != c)
+				if (tmp->data != '.')
+				{
+					printf("else if\n");
+					return (0);
+				}
 			if (tmp == NULL)
+			{
+				printf("tmp == NULL\n");
 				return (0);
+			}
 			i = 0;
 			j++;
 		}
@@ -38,7 +57,10 @@ int		is_placeable(t_node *tmp, t_tetri *forme, char c)
 		i++;
 	}
 	if (tmp == NULL && j < 3)
+	{
+		printf("forme incomplete\n");
 		return (0);
+	}
 	return (1);
 }
 
@@ -95,38 +117,29 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 	}
 	while (is_placeable(tmp, forme, '.')) // place forme a emplacement precis
 	{
+		printf("\nwhile \ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
 		design_letters(tmp, forme, forme->letter);
 		return (backtracking(list, flist, tmp->next, forme->next));
 	}
 	if (is_placeable(tmp, forme, '.') == 0 && tmp->next != NULL) // essaie de placer forme actuelle a position + 1
 	{
-		//printf("\n1er if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
+		printf("\n1er if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
 		return (backtracking(list, flist, tmp->next, forme));
 	}
 	if (is_placeable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
 	{
-		if (forme->nb > 1)
+		tmp = tetriminos_prev(list, tmp, forme->prev);
+		printf("\n2nd if\ntmp->position : %d\nforme->nb : %d\nletter - 1 : %c\n", tmp->position, forme->prev->nb, forme->prev->letter);
+		if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
 		{
-			tmp = tetriminos_prev(list, tmp, forme->prev);
-			//printf("\n2nd if\ntmp->position : %d\nforme->nb : %d\nletter - 1 : %c\n", tmp->position, forme->prev->nb, forme->prev->letter);
-			if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
-			{
-				//printf("if debut\n");
-				design_letters(tmp, forme->prev, '.');
-				//printf("if fin\n");
-			}
-			if (tmp->next != NULL && forme->prev != flist->head)
-				return (backtracking(list, flist, tmp->next, forme->prev));
+			printf("if debut\n");
+			design_letters(tmp, forme->prev, '.');
+			printf("if fin\n");
 		}
-		else if (forme->prev->nb == 1)
+		if (tmp->next != NULL && forme->prev != flist->head->prev)
 		{
-			list = carre_plus_grand(list);
-			tmp = list->head;
-			square_converter(flist, tmp->cote - 1, tmp->cote);
-			forme = flist->head;
-			printf("\n3eme if\ntmp->position : %d\nforme->nb : %d\nletter : %c\n", tmp->position, forme->nb, forme->letter);
-			affiche_coord(flist);
-			return (backtracking(list, flist, tmp, forme));
+			printf("3eme if : backtracking\n");
+			return (backtracking(list, flist, tmp->next, forme->prev));
 		}
 	}
 	//tmp->data = 'X';
@@ -136,7 +149,7 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
 {
 	int		i = 1;
-	while (forme->position != tmp->position && tmp->prev != list->head)
+	while (forme->position != tmp->position && tmp->prev != list->head->prev)
 	{
 		tmp = tmp->prev;
 		i++;
