@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/15 18:24:42 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 18:49:41 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int		open_close(char *file)
 	res = ft_sqrt(nbT * 4);		// res = cote carre
 	list1 = dessine_carre(list1, res);
 	add_tetriminos(file, list2);
-	printf("coordonnees tetriminos sur carre 4 x 4\n\n");
+	//printf("coordonnees tetriminos sur carre 4 x 4\n\n");
 	//affiche_coord(list2);
 	square_converter(list2, 4, res);
 	tmp = list1->head;
 	forme = list2->head;
 	backtracking(list1, list2, tmp, forme);
-	printf("coordonnees tetriminos sur carre %d x %d\n\n", res, res);
+	//printf("coordonnees tetriminos sur carre %d x %d\n\n", res, res);
 	//affiche_coord(list2);
 	display_square(list1);
 	list_delete(&list1);	// suppression liste
