@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/15 23:16:53 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 23:31:47 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,18 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 	}
 	while (Est_Dessinable(tmp, forme, '.') != 0)// || Est_Dessinable(tmp, forme, forme->letter) != 0) // place forme a emplacement precis
 	{
-		printf("\nplacement : %c en position : %d SUCCESS !!!\n\n", forme->letter, tmp->position);
+		printf("\nplacement : %c en position : %d = SUCCESS !!!\n\n", forme->letter, tmp->position);
 		Dessine_Forme(tmp, forme, forme->letter);
 		return (backtracking(list, flist, tmp->next, forme->next));
 	}
 	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next != NULL) // essaie de placer forme actuelle a position + 1
 	{
-		printf("tentative placement : %c en position : %d failed\n", forme->letter, tmp->position);
+		printf("tentative placement : %c en position : %d = failed\n", forme->letter, tmp->position);
 		return (backtracking(list, flist, tmp->next, forme));
 	}
 	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
 	{
-		printf("\ntentative placement : %c : TOTAL FAIL !!!\n\n", forme->letter);
+		printf("\ntentative placement : %c = TOTAL FAIL !!!\n\n", forme->letter);
 		Table_Rase(list, forme->prev);
 		tmp = Forme_Prev(list, tmp, forme->prev);
 		if (tmp->next != NULL && forme->prev != flist->head->prev)
@@ -158,6 +158,15 @@ void	Table_Rase(t_list *list, t_tetri *patron)
 		forme = patron;
 		tmp = tmp->next;
 	}
-	printf("\nTable_Rase :\n");
-	display_square(list);
+	if (patron->nb == 1 && patron->next != NULL)
+	{
+		printf("effacement : %c = OK\n", patron->letter);
+		patron = patron->next;
+	}
+	while (patron->position != 0 && patron->nb != 1 && patron->next != NULL)
+	{
+		printf("effacement : %c = OK\n", patron->letter);
+		patron = patron->next;
+	}
+	printf("\n");
 }
