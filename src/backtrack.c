@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/15 18:53:16 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 19:04:26 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 		if (is_placeable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
 		{
 			design_letters(tmp, forme->prev, '.');
-			printf("effacement : %c ok\n", forme->letter);
+			printf("effacement : %c ok\n", forme->prev->letter);
 		}
 		if (tmp->next != NULL && forme->prev != flist->head->prev)
 		{
@@ -126,14 +126,8 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 
 t_node	*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme)
 {
-	int		i = 1;
 	while (forme->position != tmp->position && tmp->prev != list->head->prev)
-	{
 		tmp = tmp->prev;
-		i++;
-	}
-	//printf("tours tetriminos_prev : %d\n", i);
-	//tmp->data = 'Z';
 	return (tmp);
 }
 
