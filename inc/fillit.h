@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/15 19:28:15 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 19:30:51 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void					square_converter(t_tlist *list, int cote1, int cote2);	//backtrack.c
 int						Est_Dessinable(t_node *elem, t_tetri *forme, char c);
 void					Dessine_Forme(t_node *tmp, t_tetri *forme, char letter);
 int						backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme);
-t_node					*tetriminos_prev(t_list *list, t_node *tmp, t_tetri *forme);
+t_node					*Forme_Prev(t_list *list, t_node *tmp, t_tetri *forme);
 t_list					*Carre_Sup(t_list *list);
 
 void					affiche_coord(t_tlist *list); // tmp.c
