@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/15 19:30:51 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 23:04:04 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void					Dessine_Forme(t_node *tmp, t_tetri *forme, char letter);
 int						backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme);
 t_node					*Forme_Prev(t_list *list, t_node *tmp, t_tetri *forme);
 t_list					*Carre_Sup(t_list *list);
+void					Table_Rase(t_list *list, t_tetri *patron);
 
 void					affiche_coord(t_tlist *list); // tmp.c
 #endif

@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/15 19:59:11 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/15 23:16:53 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 		printf("job done\n\n");
 		return (0);
 	}
-	while (Est_Dessinable(tmp, forme, '.') != 0 || Est_Dessinable(tmp, forme, forme->letter) != 0) // place forme a emplacement precis
+	while (Est_Dessinable(tmp, forme, '.') != 0)// || Est_Dessinable(tmp, forme, forme->letter) != 0) // place forme a emplacement precis
 	{
 		printf("\nplacement : %c en position : %d SUCCESS !!!\n\n", forme->letter, tmp->position);
 		Dessine_Forme(tmp, forme, forme->letter);
@@ -108,14 +108,9 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 	}
 	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next == NULL) // essaie de place forme prec a position ancienne + 1
 	{
-		Table_rase(list, forme->prev);
-		tmp = Forme_Prev(list, tmp, forme->prev);
 		printf("\ntentative placement : %c : TOTAL FAIL !!!\n\n", forme->letter);
-		if (Est_Dessinable(tmp, forme->prev, forme->prev->letter)) //check si forme prec peut etre effacee
-		{
-			Dessine_Forme(tmp, forme->prev, '.');
-			printf("effacement : %c ok\n", forme->prev->letter);
-		}
+		Table_Rase(list, forme->prev);
+		tmp = Forme_Prev(list, tmp, forme->prev);
 		if (tmp->next != NULL && forme->prev != flist->head->prev)
 		{
 			printf("deplacement : %c en position : %d\n", forme->prev->letter, tmp->next->position);
@@ -145,13 +140,13 @@ t_list	*Carre_Sup(t_list *list)
 	return (list);
 }
 
-void	Table_Rase(t_list *list, t_tlist *flist)
+void	Table_Rase(t_list *list, t_tetri *patron)
 {
 	t_node	*tmp;
 	t_tetri *forme;
 
 	tmp = list->head;
-	forme = flist->head;
+	forme = patron;
 	while (tmp)
 	{
 		while (forme)
@@ -160,8 +155,9 @@ void	Table_Rase(t_list *list, t_tlist *flist)
 				tmp->data = '.';
 			forme = forme->next;
 		}
-		forme = flist->head;
+		forme = patron;
 		tmp = tmp->next;
 	}
-	tmp = list->head;
+	printf("\nTable_Rase :\n");
+	display_square(list);
 }
