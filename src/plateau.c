@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/15 18:49:41 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/16 15:50:10 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int		open_close(char *file)
 	backtracking(list1, list2, tmp, forme);
 	//printf("coordonnees tetriminos sur carre %d x %d\n\n", res, res);
 	//affiche_coord(list2);
-	display_square(list1);
-	list_delete(&list1);	// suppression liste
 	ttlist_delete(&list2);	// suppression liste
 	return (0);
 }
