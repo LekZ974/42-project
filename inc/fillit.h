@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/16 15:17:55 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/18 00:40:11 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_list					*dessine_carre(t_list *list, int res);
 
 void					display_square(t_list *list);	//display.c
 void					ft_putchar(char c);
+void					ft_putstr(char *str);
 
 t_list					*create_list(void);						// list.c
 t_tlist					*create_ttlist(void);
@@ -79,4 +80,8 @@ t_list					*Carre_Sup(t_list *list, t_tlist *flist);
 void					Table_Rase(t_list *list, t_tetri *patron);
 
 void					affiche_coord(t_tlist *list); // tmp.c
+
+int						check_system_call(char *file); //check.c
+int						check_file(char *file);
+int						check_forme(char *schema);
 #endif

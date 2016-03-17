@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 17:27:03 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/08 11:24:39 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/17 22:57:26 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,13 @@ void	display_square(t_list *list)
 		ft_putchar(tmp->data);
 		tmp = tmp->next;
 	}
+}
+
+void	ft_putstr(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+		ft_putchar(str[i++]);
 }
