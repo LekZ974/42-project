@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/16 15:48:52 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/17 22:14:51 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	square_converter(t_tlist *list, int cote1, int cote2)
 	{
 		while (i < 3)
 		{
-			if (tmp->coordonnees[i] > 1 && cote2 > cote1)
+			if (tmp->coordonnees[i] > 1 && cote2 != cote1)
 				tmp->coordonnees[i] = tmp->coordonnees[i] + (cote2 - cote1);
 			i++;
 		}
