@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/17 22:14:51 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/18 13:03:27 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,42 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 		list_delete(&list);
 		return (0);
 	}
-	while (Est_Dessinable(tmp, forme, '.') != 0)// check si forme peut etre placee a emplacement tmp
+	while (Est_Dessinable(tmp, forme, '.'))// check si forme peut etre placee a emplacement tmp
 	{
 		printf("\nplacement : %c en position : %d = SUCCESS !!!\n\n", forme->letter, tmp->position);
 		Dessine_Forme(tmp, forme, forme->letter); // si Est_Dessinable OK, alors la forme est placee
 		return (backtracking(list, flist, list->head, forme->next)); //Deplacement d'un cran pour tester forme suivante
 	}
-	if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next != NULL) // forme non placee, mais il reste emplacements a tester
+	if (Est_Dessinable(tmp, forme, '.') == 0)
+	{
+		if (tmp->next == NULL)
+		{
+			if (forme->letter == 'A')
+			{
+				printf("\nAUGMENTATION CARRE DE TAILLE %d A TAILLE %d : SUCCESS !!!\n", tmp->cote, tmp->cote + 1);
+				list = Carre_Sup(list, flist);
+				tmp = list->head;
+			}
+			else
+			{
+				printf("\ntentative placement : %c = TOTAL FAIL !!!\n\n", forme->letter);
+				Table_Rase(list, forme->prev); //la forme precedente et toutes les suivantes sont effacee du carre
+				tmp = Forme_Prev(list, tmp, forme->prev); //tmp = emplacement forme precedente (deja effacee)
+				if (tmp->next != NULL && forme->prev != flist->head->prev)
+				{
+					tmp = tmp->next;
+					forme = forme->prev;
+				}
+			}
+		}
+		else
+		{
+			printf("tentative placement : %c en position : %d = failed\n", forme->letter, tmp->position);
+			tmp = tmp->next;
+		}
+		return(backtracking(list, flist, tmp, forme));
+	}
+	/*if (Est_Dessinable(tmp, forme, '.') == 0 && tmp->next != NULL) // forme non placee, mais il reste emplacements a tester
 	{
 		printf("tentative placement : %c en position : %d = failed\n", forme->letter, tmp->position);
 		return (backtracking(list, flist, tmp->next, forme));
@@ -124,7 +153,7 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 			printf("deplacement : %c en position : %d\n", forme->prev->letter, tmp->next->position);
 			return (backtracking(list, flist, tmp->next, forme->prev)); //positionne forme precedente sur emplacement suivant
 		}
-	}
+	}*/
 	return (1);
 }
 
