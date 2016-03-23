@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 22:58:29 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/23 09:57:37 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/23 10:56:28 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int		check_file(char *file)
 
 	i = 0;
 	j = 0;
-	printf("check_file(str) : start\n");
 	if (!(schema = (char *)malloc(sizeof(char) * 21)))
 		return (1);
 	while (file[i])
@@ -58,27 +57,27 @@ int		check_file(char *file)
 			schema[j] = file[i];
 		if (j == 19)
 		{
-			printf("i = %d\n", i);
+			//printf("i = %d\n", i);
+			//printf("\n-----\n%s\n-----\n", schema);
 			if (check_forme(schema))
 			{
 				printf("check_forme(schema) return ERROR\n");
 				return (1);
 			}
-			printf("\n-----\n%s\n-----\n", schema);
-			printf("check_forme : OK\n");
 			if (file[i + 1] != '\n' && file[i + 1] != '\0')
 			{
 				printf("file[i] : [%c]\n", file[i]);
 				printf("file[i + 1] = [%c] est different de n ou de 0\n", file[i + 1]);
 				return (1);
 			}
+			if (file[i + 1] != '\0')
+				i = i + 1;
 			j = -1;
 		}
 		i++;
 		j++;
 	}
 	free(schema);
-	printf("check_file(str) : OK\n");
 	return (0);
 }
 
@@ -95,7 +94,7 @@ int		check_forme(char *schema)
 	l = 0;
 	sharp = 0;
 	doublon = malloc(sizeof(int) * SIZE);
-	//printf("check_forme start\n");
+	printf("check_forme start\n");
 	if (!doublon)
 		return (1);
 	while (i < SIZE)
@@ -106,26 +105,27 @@ int		check_forme(char *schema)
 	{
 		if (schema[i] == '#')
 		{
-			//printf("i : %d\n", i);
+			sharp++;
+			if (sharp == 1)
+				printf("i dans check_forme : %d\n", i);
 			doublon[l++] = i;
-			if (schema[i - 1] == '#' && i - 1 > 0)
+			if (schema[i - 1] == '#' && i - 1 >= 0)
 				doublon[l++] = i - 1;
 			if (schema[i + 1] == '#' && schema[i + 1] != '\0')
 				doublon[l++] = i + 1;
-			if (schema[i - 5] == '#' && i - 5 > 0)
+			if (schema[i - 5] == '#' && i - 5 >= 0)
 				doublon[l++] = i - 5;
 			if (schema[i + 5] == '#' && schema[i + 5] != '\0')
 				doublon[l++] = i + 5;
-			sharp++;
-		//	printf("diese nb : %d\n", sharp);
-		//	affiche_tab(doublon);
+			//printf("diese nb : %d\n", sharp);
+			//affiche_tab(doublon);
 		}
 		i++;
 	}
 	if (check_doublons(doublon) == 1)
 	{
 		free(doublon);
-		//printf("check_forme end : error - pas de doublons\n");
+		printf("check_forme end : error - pas de doublons\n");
 		return (1);
 	}
 	free(doublon);
@@ -161,8 +161,8 @@ int		check_doublons(int *tab)
 	i = 0;
 	j = 0;
 	k = 0;
-	//printf("check_doublons : start\n");
-	//affiche_tab(tab);
+	printf("check_doublons : start\n");
+	affiche_tab(tab);
 	while (k < 16)
 	{
 		while (i < 16)
@@ -170,7 +170,7 @@ int		check_doublons(int *tab)
 			if (tab[k] == tab[i])
 			{
 				j++;
-	//			printf("doublon tab[%d] : %d\n", i, tab[i]);
+				//printf("doublon tab[%d] : %d\n", i, tab[i]);
 			}
 			i++;
 		}

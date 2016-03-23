@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 17:33:31 by ggane             #+#    #+#             */
-/*   Updated: 2016/03/22 20:09:21 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/23 10:55:32 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		backtracking(t_list *list, t_tlist *flist, t_node *tmp, t_tetri *forme)
 {
 	if (forme == NULL) //toutes les formes ont ete placee. Resolution terminee.
 	{
-		//printf("job done\n\n");
+		printf("job done\n\n");
 		display_square(list);
 		list_delete(&list);
 		return (0);
