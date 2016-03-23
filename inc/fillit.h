@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:28:20 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/18 00:40:11 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/22 20:19:12 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define FILLIT_H
 
 # define BUF_SIZE 1
+# define SIZE 16
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -84,4 +85,8 @@ void					affiche_coord(t_tlist *list); // tmp.c
 int						check_system_call(char *file); //check.c
 int						check_file(char *file);
 int						check_forme(char *schema);
+void					check_cardinaux(char *str, int i, int *tab);
+int						check_doublons(int *tab);
+void					affiche_tab(int *doublon);
+
 #endif

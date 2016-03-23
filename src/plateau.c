@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 16:27:50 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/03/16 15:50:10 by ggane            ###   ########.fr       */
+/*   Updated: 2016/03/22 11:09:20 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ int		open_close(char *file)
 	list2 = create_ttlist(); //donne acces a liste tetriminos
 	fd = open(file, O_RDONLY);	//lecture fichier
 	while (read(fd, buf, 1))
-	{
 		if (buf[0] == '\n')
 			index++;
-	}
 	close(fd);
 	nbT = (index / 5) + 1;
 	res = ft_sqrt(nbT * 4);		// res = cote carre
