@@ -6,46 +6,50 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/04 16:48:21 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/05/06 17:46:52 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/05/20 18:22:28 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	fill_line(const int fd, char **line)
+static int	size_line(char *line)
 {
-	static char	buf[BUF_SIZE];
-	static int		i;
-	static int		end;
+	int		size;
+
+	size = 0;
+	while (line[size] != '\n' || line[size] != EOF)
+		size++;
+	return (size);
+}
+
+static char	*read_line(char **line)
+{
+	int			i;
+	static char	*stock;
 
 	i = 0;
-	if (i == 0 || i == end)
-		end = read(fd, buf, BUF_SIZE);
-	while(read(fd, buf, 1) != EOF)
+	stock = (char*)malloc(sizeof(char) * size_line(*line) + 1);
+	while (*line[i] && i < BUFF_SIZE)
 	{
-		if (buf[i] == '\n' || buf[i] == '\0')
+		if (*line[i] == '\n' || *line[i] == EOF)
 		{
-			*line = ft_strdup(buf);
-			return (buf[i]);
+			stock[i] = '\0';
+			return (*line);
 		}
+		stock[i] = *line[i];
 		i++;
 	}
-	return (0);
+	return (stock);
 }
 
 int		get_next_line(const int fd, char **line)
 {
-	t_line	*ptr;
-	char 	buf[BUF_SIZE];
+	static char		*read_line;
 
-	ptr = malloc(sizeof(char*)*(BUF_SIZE) + 1);
-	ptr->data = fill_line(fd, line);
-	if (fill_line(fd, line) == '\0' || fill_line(fd, line) == '\n')
-	{
-		if (fill_line(fd, line) == '\n')
-			return (1);
-		if (fill_line(fd, line) == '\0')
-			return (0);
-	}
-	return (-1);
+	read_line = read_line(line);
+	if (fd <= 0 || line == NULL || read_line == NULL) 
+		return (-1);
+	if (read_line(line) && fd > 0)
+		return (1);
+	return (0);
 }
