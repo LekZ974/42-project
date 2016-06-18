@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 11:34:15 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/06/16 18:51:03 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/06/18 19:04:26 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,23 @@
 char	*ft_takeline(char **save, char **line)
 {
 	char		*pos;
+	char		*del;
 
 	pos = ft_strchr(*save, '\n');
 	if (pos)
 		*pos = 0;
 	if (!*line)
+	{
+		del = *line;
 		*line = ft_strdup(*save);
+		free(del);
+	}
 	else
+	{
+		del = *line;
 		*line = ft_strjoin((char *)*line, *save);
+		free(del);
+	}
 	if (pos && pos[1])
 	{
 		*save = ft_strcpy(*save, pos + 1);
@@ -62,10 +71,10 @@ int		get_next_line(int const fd, char **line)
 	int			gnl;
 	char		*ret;
 
-	*line = NULL;
 	gnl = 0;
 	if (BUFF_SIZE < 0 || fd < 0 || line == NULL)
 		return (-1);
+	*line = NULL;
 	if (save.prev_fd != fd)
 	{
 		ft_memdel((void **)&save.stock);
@@ -83,12 +92,11 @@ int		get_next_line(int const fd, char **line)
 			gnl = 1;
 	}
 	if (gnl == 0)
-	{
 		gnl = ft_read(fd, &save.stock, &(*line));
-		if (gnl == 0 && !*line)
-			free(save.stock);
-	}
 	if (*line)
+	{
 		gnl = 1;
+		free(*line);
+	}
 	return (gnl);
 }
