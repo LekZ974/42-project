@@ -4,6 +4,11 @@ clang -Wall -Wextra -Werror -I libft/includes -o get_next_line.o -c get_next_lin
 clang -Wall -Wextra -Werror -I libft/includes -o main.o -c main.c
 clang -o test_gnl main.o get_next_line.o -I libft/includes -L libft/ -lft
 
+<<<<<<< HEAD
+=======
+echo ----- test 1 -----
+./test_gnl "1"
+>>>>>>> master
 
 echo ----- test 2 -----
 ./test_gnl "2"

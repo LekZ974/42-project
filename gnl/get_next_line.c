@@ -5,87 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/04 16:48:21 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/05/27 18:05:17 by ahoareau         ###   ########.fr       */
+/*   Created: 2016/06/19 15:00:29 by ahoareau          #+#    #+#             */
+/*   Updated: 2016/06/19 18:20:42 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "get_next_line.h"
 #include <stdio.h>
 
-int		malloc_again(char **save)
+char	*ft_takeline(char **save, char **line)
 {
-	char	*tmp;
+	char		*pos;
+	char		*del;
 
-	if (!(tmp = ft_strnew(ft_strlen(*save))))
-		return (0);
-	ft_strcpy(tmp, *save);
-	ft_bzero(*save, ft_strlen(*save));
-	if (!(*save = ft_strnew(ft_strlen(tmp) + BUFF_SIZE)))
-		return (0);
-	ft_strcpy(*save, tmp);
-	return (1);
+	pos = ft_strchr(*save, '\n');
+	if (pos)
+		*pos = 0;
+	if (!*line)
+	{
+		del = *line;
+		*line = ft_strdup(*save);
+		free(del);
+	}
+	else
+	{
+		del = *line;
+		*line = ft_strjoin((char *)*line, *save);
+		free(del);
+	}
+	if (pos && pos[1])
+		*save = ft_strcpy(*save, pos + 1);
+	else if ((pos && !pos[1]) || !pos)
+		ft_bzero((void *)*save, ft_strlen(*save));
+	return (pos);
 }
 
-int		fill_line(char **save, char **line, int ret)
+int		ft_read(int const fd, char **save, char **line)
 {
-	int		i;
-	int		j;
+	char		*pos;
+	int			gnl;
 
-	i = 0;
-	j = 0;
-	if (ret > 0 && *save != NULL)
+	gnl = 1;
+	pos = NULL;
+	while (gnl != 0)
 	{
-		while ((*save)[i] != '\n' && (*save)[i])
-		{
-			(*line)[i] = (*save)[i];
-			i++;
-		}
-		(*line)[i] = '\0';
-		if ((*save)[0] == '\n')
-		{
-			while ((*save)[i])
-				(*save)[j++] = (*save)[i++];
-			(*save)[j] = '\0';
+		gnl = read(fd, *save, BUFF_SIZE);
+		if (gnl < 0)
+			return (-1);
+		if (gnl == 0)
+			return (0);
+		(*save)[gnl] = 0;
+		pos = ft_takeline(save, &(*line));
+		if (pos)
 			return (1);
-		}
-		while ((*save)[i])
-			(*save)[j++] = (*save)[i++];
-		(*save)[j] = '\0';
 	}
 	return (0);
 }
 
-int		get_next_line(const int fd, char **line)
+int		ft_save(int gnl, char **save, char **line)
 {
-	static char	*save_line;
-	int			ret;
+	char		*ret;
 
-	if (fd < 0 || !(((save_line = ft_strnew(BUFF_SIZE)) && save_line)))
+	if (ft_strchr(*save, '\n') || *save[0])
+	{
+		ret = ft_takeline(save, line);
+		if (ret)
+			gnl = 1;
+	}
+	return (gnl);
+}
+
+int		get_next_line(int const fd, char **line)
+{
+	static t_fd	save;
+	int			gnl;
+
+	gnl = 0;
+	if (BUFF_SIZE < 0 || fd < 0 || line == NULL)
 		return (-1);
-	if (!(*line = (char *)malloc(sizeof(char) * BUFF_SIZE)))
-		return (-1);
-	while ((ret = read(fd, *line, BUFF_SIZE)) > 0)
+	*line = NULL;
+	if (save.prev_fd != fd)
 	{
-		if (malloc_again(&save_line))
-		{
-			ft_strncat(save_line, *line, BUFF_SIZE);
-			if (ft_memchr(*line, '\n', BUFF_SIZE))
-				break ;
-		}
-		else
-			return (-1);
+		ft_memdel((void **)&save.stock);
+		save.prev_fd = fd;
 	}
-	if (ret > 0)
+	if (!save.stock)
 	{
-		fill_line(&save_line, &(*line), ret);
-		return (1);
+		save.stock = (char *)malloc(sizeof(char) * BUFF_SIZE + 1);
+		ft_bzero(save.stock, ft_strlen(save.stock));
 	}
-	if (ft_memcmp(*line, save_line, ft_strlen(*line)) == 0)
-	{
-		if (!(*line = ft_strdup("")))
-			return (1);
-		return (0);
-	}
-	return (1);
+	gnl = ft_save(gnl, &save.stock, &(*line));
+	if (gnl == 0)
+		gnl = ft_read(fd, &save.stock, &(*line));
+	if (*line)
+		gnl = 1;
+	return (gnl);
 }

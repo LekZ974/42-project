@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 1234567
+=======
+Invalid file descriptor
+>>>>>>> master
