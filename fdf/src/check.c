@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 14:22:03 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/04 12:32:17 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/12 14:44:23 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int		check_file(char *str)					//check si data est composer de caractere entre 0
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '-')
+			i++;
 		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == ' ' || str[i] == '\n'))
 			return (1);
 		i++;

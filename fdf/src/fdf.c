@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 13:49:10 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/05 14:41:26 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/12 14:58:50 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int		fdf(char *str)
 	}
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, 1000, 1000, "fdf");
-	get_tab(str, env);
+	env = get_tab(str, env);
 	pixel_put(env);
+	write(1, "OK\n", 3);
 	mlx_key_hook(env->win, key_funct, env);
 	mlx_loop(env->mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 17:41:23 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/05 18:28:09 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:06:52 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,47 @@
 
 void	pixel_put(t_env *env)
 {
-	int		n;
+	int		j;
 	int		i;
 	int		x;
 	int		y;
 
-	n = 0;
+	j = 0;
 	i = 0;
 	env->coef = 10;
-	env->tab.y = 250;
-	y = env->tab.y;
-	while (env->tab.y <= (y + (env->tab.i * env->coef)))
+	y = 0;
+	env->tab.i = env->tab.i * env->coef;
+	env->tab.j = env->tab.j * env->coef;
+	while (y < (env->tab.i))
 	{
-		printf("env->tab.y = %d\n env->tab.x = %d\n env->tab.i = %d\n env->tab.j = %d\n##############\n",env->tab.y, env->tab.x, env->tab.i, env->tab.j);
-		//ft_putendl("allumer pixl1\n");
-		env->tab.x = 250;
-		x = env->tab.x;
-		while (env->tab.x <= (x + (env->tab.j * env->coef)))
+		x = 0;
+		j = 0;
+		while (x < (env->tab.j))
 		{
-//			printf("##%d##\n", env->tab.tab[i][n]);
-			if (env->tab.tab[i][n++] == 10)
-				mlx_pixel_put(env->mlx, env->win, env->tab.x, env->tab.y, 0xA800AF);
+//			ft_putnbr(i);
+//			ft_putchar(' ');
+//			ft_putnbr(j);
+//			ft_putchar(' ');
+//			ft_putnbr(env->tab.j);
+//			ft_putchar(' ');
+//			ft_putnbr(env->tab.tab[i][j]);
+//			ft_putchar('\n');
+			if (env->tab.tab[i][j] > 0)
+			{
+				mlx_pixel_put(env->mlx, env->win, x, y, 0xA800AF);
+			}
 			else
-			//ft_putendl("allumer pixl\n");
-				mlx_pixel_put(env->mlx, env->win, env->tab.x, env->tab.y, 0xFFFFFF);
-			env->tab.x += env->coef;
-			printf("           env->tab.y = %d\n env->tab.x = %d\n env->coef = %d\n env->tab.i = %d\n env->tab.j = %d\n##############\n",env->tab.y, env->tab.x, env->coef, env->tab.i, env->tab.j);
+				mlx_pixel_put(env->mlx, env->win, x, y, 0xFFFFFF);
+			x += env->coef;
+			j++;
 		}
-		env->tab.y += env->coef;
+//		ft_putstr("##########");
+		y += env->coef;
+		i++;
+//		ft_putnbr(y);
+//		ft_putchar('\n');
 	}
 }
 
 
-//comprendre pkoi le tableau se rempli bien quune fois sur quatre...
 //segfault ds les deplacements avec les fleche, comprendre comment sauvegarder une data ds la structure

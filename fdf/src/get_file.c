@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 12:57:58 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/05 17:36:56 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/12 14:40:17 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,16 @@ int		count(char *line)
 	j = 0;
 	while (line[i])
 	{
-	//	printf("%c %d\n", line[i], j);
-		if (line[i] != ' ' && line[i] != '\n')
-			j++;
+		if (line[i] != ' ')
+		{
+			j++;	
+			while (line[i] != ' ')
+			{
+				i++;
+				if (line[i] == '\n' || line[i] == '\0')
+					return (j);
+			}
+		}
 		i++;
 	}
 	return(j);
@@ -38,23 +45,21 @@ void	get_int(int i, t_env *env, char *line)
 
 	n = 0;
 	j = 0;
-	while (line[j] != '\0')
+	while (line[n] != '\0')
 	{
-//		printf("line[j] = %c ## i = %d ## n = %d ## env->tab.tab = %d\n", line[j], i, n, env->tab.tab[i][n]);
-		if (line[j] != ' ' && line[j] != '\0')
+		if (line[n] != ' ' && line[n] != '\0')
 		{
-			env->tab.tab[i][n] = line[j] - '0';
-			j++;
-			while (line[j] != ' ' && line[j] != '\0')
-			{
-				env->tab.tab[i][n] = env->tab.tab[i][n] * 10 + line[j] - '0';
-				j++;
-			}
-//		printf("####line[j] = %c ## i = %d ## n = %d ## env->tab.tab = %d####\n", line[j], i, n, env->tab.tab[i][n]);
+			env->tab.tab[i][j] = line[n] - '0';
 			n++;
-		}
-		if (line[j] == ' ')
+			while (line[n] != ' ' && line[n] != '\0')
+			{
+				env->tab.tab[i][j] = env->tab.tab[i][j] * 10 + line[n] - '0';
+				n++;
+			}
 			j++;
+		}
+		if (line[n] == ' ')
+			n++;
 	}
 }
 
@@ -72,10 +77,9 @@ void	mall_tab(int fd, t_env *env)
 	{
 		if (env->tab.i == 0)
 			env->tab.j = count(line);
-//		printf("count(line) = %d\n", count(line));
 		env->tab.i++;
 	}
-	tab = (int **)malloc(sizeof(int) * env->tab.i);		//malloc la taille de la map (nb ligne)
+	tab = (int **)malloc(sizeof(int *) * env->tab.i);		//malloc la taille de la map (nb ligne)
 	if (tab == NULL)
 	{
 		ft_putendl("Probleme allocation memoire -> map.\n");
@@ -91,7 +95,7 @@ void	mall_tab(int fd, t_env *env)
 	env->tab.tab = tab;
 }
 
-void		get_tab(char *str, t_env *env)
+t_env		*get_tab(char *str, t_env *env)
 {
 	int		fd;
 	int		fd2;
@@ -108,4 +112,6 @@ void		get_tab(char *str, t_env *env)
 		get_int(i, env, line);
 		i++;
 	}
+	close(fd2);
+	return (env);
 }

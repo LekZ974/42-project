@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 16:15:56 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/05 18:28:15 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/10 17:42:07 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 typedef struct		s_tab
 {
-	int				x;	//position affichage colonne
-	int				y;	//position affichage ligne
+//	int				x;	//position affichage colonne
+//	int				y;	//position affichage ligne
 	int				i;  //nb de lignes
 	int				j;	//nb de colonnes
 	int				**tab;
@@ -45,9 +45,10 @@ int		fdf(char *str);
 int		exist_file(char *file);
 int		check_file(char *str);
 
-void	get_tab(char *str, t_env *env);
+t_env	*get_tab(char *str, t_env *env);
 void	get_int(int i, t_env *env, char *line);
 int		count(char *line);
+void	mall_tav(int fd, t_env *env);
 
 void	pixel_put(t_env *env);
 
