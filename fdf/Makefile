@@ -6,7 +6,7 @@
 #    By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/12 15:37:33 by ahoareau          #+#    #+#              #
-#    Updated: 2016/09/04 13:47:13 by ahoareau         ###   ########.fr        #
+#    Updated: 2016/09/16 13:49:36 by ahoareau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,14 @@ SRC = ./src/fdf.c\
 	  ./src/check.c\
 	  ./src/put_pxl.c\
 	  ./src/get_file.c\
+	  ./src/display.c\
 	  ./src/command.c
 
 OBJ = fdf.o\
 	 check.o\
 	 put_pxl.o\
 	 get_file.o\
+	 display.o\
 	 command.o
 
 HEADER = ./includes/fdf.h\

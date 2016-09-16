@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 17:41:23 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/12 18:06:52 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/16 16:36:30 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,41 @@ void	pixel_put(t_env *env)
 
 	j = 0;
 	i = 0;
-	env->coef = 10;
-	y = 0;
-	env->tab.i = env->tab.i * env->coef;
-	env->tab.j = env->tab.j * env->coef;
-	while (y < (env->tab.i))
+//	env->coef = 15;
+	y = env->tab.cy;
+	env->tab.i = env->tab.cy + env->tab.i * env->coef;
+	env->tab.j = env->tab.cx + env->tab.j * env->coef;
+	while (env->tab.cy < (env->tab.i))
 	{
-		x = 0;
+		x = env->tab.cx;
 		j = 0;
+		y = env->tab.cy;
 		while (x < (env->tab.j))
 		{
-//			ft_putnbr(i);
-//			ft_putchar(' ');
-//			ft_putnbr(j);
-//			ft_putchar(' ');
-//			ft_putnbr(env->tab.j);
-//			ft_putchar(' ');
-//			ft_putnbr(env->tab.tab[i][j]);
-//			ft_putchar('\n');
 			if (env->tab.tab[i][j] > 0)
 			{
+//				ft_putchar('*');
+//				ft_putnbr(y);
+//				ft_putchar('\n');
+//				ft_putnbr(env->tab.cy);
+//				ft_putchar('\n');
+				y -= env->tab.tab[i][j];	
 				mlx_pixel_put(env->mlx, env->win, x, y, 0xA800AF);
+				y += env->tab.tab[i][j];	
 			}
 			else
 				mlx_pixel_put(env->mlx, env->win, x, y, 0xFFFFFF);
 			x += env->coef;
+			y -= env->coef / 2;
+	//		ft_putnbr(y);
+	//		ft_putchar('-');
 			j++;
 		}
 //		ft_putstr("##########");
-		y += env->coef;
+	//	ft_putnbr(i);
+	//	ft_putchar('\n');
 		i++;
+		env->tab.cy += env->coef;
 //		ft_putnbr(y);
 //		ft_putchar('\n');
 	}

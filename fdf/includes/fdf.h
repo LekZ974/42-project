@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 16:15:56 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/10 17:42:07 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/16 13:58:22 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 typedef struct		s_tab
 {
-//	int				x;	//position affichage colonne
-//	int				y;	//position affichage ligne
+	int				cx;	//position affichage colonne
+	int				cy;	//position affichage ligne
 	int				i;  //nb de lignes
 	int				j;	//nb de colonnes
 	int				**tab;
@@ -34,6 +34,8 @@ typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
+	int				xwin;
+	int				ywin;
 	int				coef;	//coef d'affichage
 	t_tab			tab;
 }					t_env;
@@ -53,5 +55,7 @@ void	mall_tav(int fd, t_env *env);
 void	pixel_put(t_env *env);
 
 int		key_funct(int keycode, t_env *env);
+
+void	disp_window(t_env *env);
 
 #endif
