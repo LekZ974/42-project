@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 17:41:23 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/16 16:36:30 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/17 17:47:09 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,11 @@ void	pixel_put(t_env *env)
 
 
 //segfault ds les deplacements avec les fleche, comprendre comment sauvegarder une data ds la structure
+
+void		print_img(t_env *env)
+{
+	env->img.data = mlx_get_data_addr(env->img.img, &env->img.bpp, &env->img.sl, &env->img.endian);
+
+
+}
+

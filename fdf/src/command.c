@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 13:02:47 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/16 16:09:51 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/17 16:19:17 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ int		key_funct(int keycode, t_env *env)
 	if (keycode == 125 || keycode == 1)
 	{
 //		env->tab.cy += 10;
+	}
+	if (keycode == 69)
+	{
+		env->coef += 5;
+	}
+	if (keycode == 78)
+	{
+		env->coef -= 5;
 	}
 	return (0);
 }

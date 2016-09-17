@@ -6,12 +6,15 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 16:15:56 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/16 13:58:22 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/17 17:45:48 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+
+#define WIDTH 2000
+#define	HEIGHT 1000
 
 # include "../libft/libft.h"
 # include <mlx.h>
@@ -30,15 +33,29 @@ typedef struct		s_tab
 	int				**tab;
 }					t_tab;
 
+typedef	struct		s_img
+{
+	void			*img;
+	char			*data;
+	int				bpp;
+	int				sl;
+	int				endian;
+}					t_img;
+
 typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
-	int				xwin;
-	int				ywin;
 	int				coef;	//coef d'affichage
 	t_tab			tab;
+	t_img			img;
 }					t_env;
+
+typedef	struct		s_color
+{
+	int				color1;
+	int				color2;
+}					t_color;
 
 int 	check(char *file);
 char 	*fill_str(char *file);
@@ -53,9 +70,11 @@ int		count(char *line);
 void	mall_tav(int fd, t_env *env);
 
 void	pixel_put(t_env *env);
+void	print_img(t_env *env);
 
 int		key_funct(int keycode, t_env *env);
 
 void	disp_window(t_env *env);
+void	clear(t_env *env);
 
 #endif
