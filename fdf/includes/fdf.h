@@ -6,12 +6,15 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 16:15:56 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/16 13:58:22 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/17 17:55:28 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+
+#define WIDTH 2000
+#define	HEIGHT 1000
 
 # include "../libft/libft.h"
 # include <mlx.h>
@@ -34,8 +37,6 @@ typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
-	int				xwin;
-	int				ywin;
 	int				coef;	//coef d'affichage
 	t_tab			tab;
 }					t_env;
