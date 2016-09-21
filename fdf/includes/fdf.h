@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 16:15:56 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/17 17:45:48 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:35:21 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define FDF_H
 
 #define WIDTH 2000
-#define	HEIGHT 1000
+#define	LENGTH 1000
 
 # include "../libft/libft.h"
 # include <mlx.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <math.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 
@@ -42,6 +43,13 @@ typedef	struct		s_img
 	int				endian;
 }					t_img;
 
+typedef	struct		s_coord
+{
+	int				x;
+	int				y;
+	int				z;
+}					t_coord;
+
 typedef struct		s_env
 {
 	void			*mlx;
@@ -49,6 +57,8 @@ typedef struct		s_env
 	int				coef;	//coef d'affichage
 	t_tab			tab;
 	t_img			img;
+	t_coord			p1;
+	t_coord			p2;
 }					t_env;
 
 typedef	struct		s_color
@@ -69,12 +79,20 @@ void	get_int(int i, t_env *env, char *line);
 int		count(char *line);
 void	mall_tav(int fd, t_env *env);
 
-void	pixel_put(t_env *env);
-void	print_img(t_env *env);
+void	pixel_put(t_env *env, int x, int y);
+void	draw_r_h(t_env *env);
+void	draw_l_h(t_env *env);
+void	draw_u_v(t_env *env);
+void	draw_d_v(t_env *env);
+void	draw_lign(t_env *env);
 
 int		key_funct(int keycode, t_env *env);
 
 void	disp_window(t_env *env);
-void	clear(t_env *env);
+int		expose_hook(t_env *env);
+void	display_win(t_env *env);
+
+t_coord	get_point(t_env *env, int x, int y, int z);
+void	iso(t_env *env);
 
 #endif

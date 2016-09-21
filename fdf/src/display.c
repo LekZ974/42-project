@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/16 13:41:19 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/17 17:42:27 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/21 14:09:23 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	disp_window(t_env *env)
 {
-	env->tab.cy = 300 % (env->tab.i * HEIGHT);
+	env->tab.cy = 300 % (env->tab.i * LENGTH);
 	env->tab.cx = 400 % (env->tab.j * WIDTH);
 //	ft_putnbr(env->tab.cx);
 //	ft_putchar('\n');
@@ -26,7 +26,17 @@ void	disp_window(t_env *env)
 //	ft_putchar('\n');
 }
 
-void	clear(t_env *env)
+int		expose_hook(t_env *env)
 {
 	mlx_clear_window(env->mlx, env->win);
+	iso(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img.img, 0, 0);
+	return (0);
+}
+
+void	display_win(t_env *env)
+{
+	mlx_key_hook(env->win, key_funct, env);
+	mlx_expose_hook(env->win, expose_hook, env);
+	ft_putstr("disp\n");
 }

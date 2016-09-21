@@ -6,69 +6,91 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 17:41:23 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/17 17:47:09 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:29:11 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <stdio.h>
 
-void	pixel_put(t_env *env)
+void	pixel_put(t_env *env, int x, int y)
 {
-	int		j;
-	int		i;
+	int		pos;
+
+	if ( x >= 0 && x < WIDTH && y >= 0 && y < LENGTH)
+	{
+		pos = (x * env->img.bpp / 8) + (y * env->img.sl);
+	}
+
+}
+
+void	draw_r_h(t_env *env)
+{
 	int		x;
+
+	x = env->p1.x;
+	ft_putnbr(x);
+	ft_putchar('-');
+	ft_putnbr(env->p2.x);
+	ft_putchar('-');
+	ft_putnbr(env->p1.x);
+	ft_putchar('\n');
+	while (x <= env->p2.x)
+	{
+		pixel_put(env, x, env->p1.y + ((env->p2.y - env->p1.y) * (x - env->p1.x)) / (env->p2.x - env->p1.x));
+	}
+	ft_putstr("DRAW1\n");
+}
+
+void	draw_l_h(t_env *env)
+{
+	int		x;
+
+	x = env->p2.x;
+	while (x <= env->p1.x)
+	{
+		pixel_put(env, x, env->p2.y + ((env->p1.y - env->p2.y) * (x - env->p2.x)) / (env->p1.x - env->p2.x));
+	}
+	ft_putstr("DRAW2\n");
+}
+
+void	draw_d_v(t_env *env)
+{
 	int		y;
 
-	j = 0;
-	i = 0;
-//	env->coef = 15;
-	y = env->tab.cy;
-	env->tab.i = env->tab.cy + env->tab.i * env->coef;
-	env->tab.j = env->tab.cx + env->tab.j * env->coef;
-	while (env->tab.cy < (env->tab.i))
+	y = env->p1.y;
+	while (y <= env->p2.y)
 	{
-		x = env->tab.cx;
-		j = 0;
-		y = env->tab.cy;
-		while (x < (env->tab.j))
-		{
-			if (env->tab.tab[i][j] > 0)
-			{
-//				ft_putchar('*');
-//				ft_putnbr(y);
-//				ft_putchar('\n');
-//				ft_putnbr(env->tab.cy);
-//				ft_putchar('\n');
-				y -= env->tab.tab[i][j];	
-				mlx_pixel_put(env->mlx, env->win, x, y, 0xA800AF);
-				y += env->tab.tab[i][j];	
-			}
-			else
-				mlx_pixel_put(env->mlx, env->win, x, y, 0xFFFFFF);
-			x += env->coef;
-			y -= env->coef / 2;
-	//		ft_putnbr(y);
-	//		ft_putchar('-');
-			j++;
-		}
-//		ft_putstr("##########");
-	//	ft_putnbr(i);
-	//	ft_putchar('\n');
-		i++;
-		env->tab.cy += env->coef;
-//		ft_putnbr(y);
-//		ft_putchar('\n');
+		pixel_put(env, env->p2.x + ((env->p1.x - env->p2.x) * (y - env->p2.y)) / (env->p1.y - env->p2.y), y);
 	}
+	ft_putstr("DRAW3\n");
 }
 
-
-//segfault ds les deplacements avec les fleche, comprendre comment sauvegarder une data ds la structure
-
-void		print_img(t_env *env)
+void	draw_u_v(t_env *env)
 {
-	env->img.data = mlx_get_data_addr(env->img.img, &env->img.bpp, &env->img.sl, &env->img.endian);
+	int		y;
 
-
+	y = env->p2.y;
+	while (y <= env->p1.y)
+	{
+		pixel_put(env, env->p1.x + ((env->p2.x - env->p1.x) * (y - env->p1.y)) / (env->p2.y - env->p1.y), y);
+	}
+	ft_putstr("DRAW4\n");
 }
 
+void	draw_lign(t_env *env)
+{
+	ft_putstr("ALORS?\n");
+	if (env->p1.x <= env->p2.x && (env->p2.x - env->p1.x) >= abs(env->p2.y - env->p1.y))
+				draw_r_h(env);
+		else if (env->p2.x <= env->p1.x && (env->p1.x - env->p2.x) >= abs(env->p1.y - env->p2.y))
+				draw_l_h(env);
+		else if (env->p2.y <= env->p1.y && (env->p1.y - env->p2.y) >= abs(env->p1.x - env->p2.x))
+				draw_u_v(env);
+		else if (env->p1.y <= env->p2.y && (env->p2.y - env->p1.y) >= abs(env->p2.x - env->p1.x))
+				draw_d_v(env);
+}
+//Trouver ou sa segfault
+//si pas bon revenir ancien git
+//
+//segfault ds les deplacements avec les fleche, comprendre comment sauvegarder une data ds la structure
