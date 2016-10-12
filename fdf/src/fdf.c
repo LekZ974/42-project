@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 13:49:10 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/17 17:55:51 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/10/06 18:15:11 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,23 @@ char	*fill_str(char *file)		//li le fichier et ret chaine character
 
 int		fdf(char *str)
 {
-	t_env	*env;
+	t_env	*e;
 
-	env = NULL;
+	e = NULL;
 	ft_putendl(str);
-	env = malloc(sizeof(t_env));
-	if (env == NULL)
+	e = malloc(sizeof(t_env));
+	if (e == NULL)
 	{
 		ft_putendl("Probleme allocation memoire.\n");
 		exit(1);
 	}
-	env->mlx = mlx_init();
-	env = get_tab(str, env);
-	disp_window(env);
-	env->win = mlx_new_window(env->mlx, WIDTH, HEIGHT, "fdf");
-	pixel_put(env);
-	write(1, "OK\n", 3);
-	mlx_key_hook(env->win, key_funct, env);
-	mlx_loop(env->mlx);
+	e->mlx = mlx_init();
+	e = get_tab(str, e);
+	disp_window(e);
+	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, "fdf");
+	draw(e);
+	mlx_hook(e->win, 2, (1L < 01), key_funct, e);
+	mlx_loop(e->mlx);
 	return (0);
 }
 

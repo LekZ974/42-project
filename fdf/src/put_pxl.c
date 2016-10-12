@@ -6,61 +6,45 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 17:41:23 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/16 16:36:30 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/10/11 16:40:08 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <stdio.h>
 
-void	pixel_put(t_env *env)
+void	pixel_put_r(t_env *e, int x1, int x2, int y1, int y2)
 {
-	int		j;
-	int		i;
 	int		x;
-	int		y;
 
-	j = 0;
-	i = 0;
-//	env->coef = 15;
-	y = env->tab.cy;
-	env->tab.i = env->tab.cy + env->tab.i * env->coef;
-	env->tab.j = env->tab.cx + env->tab.j * env->coef;
-	while (env->tab.cy < (env->tab.i))
-	{
-		x = env->tab.cx;
-		j = 0;
-		y = env->tab.cy;
-		while (x < (env->tab.j))
-		{
-			if (env->tab.tab[i][j] > 0)
-			{
-//				ft_putchar('*');
-//				ft_putnbr(y);
-//				ft_putchar('\n');
-//				ft_putnbr(env->tab.cy);
-//				ft_putchar('\n');
-				y -= env->tab.tab[i][j];	
-				mlx_pixel_put(env->mlx, env->win, x, y, 0xA800AF);
-				y += env->tab.tab[i][j];	
-			}
-			else
-				mlx_pixel_put(env->mlx, env->win, x, y, 0xFFFFFF);
-			x += env->coef;
-			y -= env->coef / 2;
-	//		ft_putnbr(y);
-	//		ft_putchar('-');
-			j++;
-		}
-//		ft_putstr("##########");
-	//	ft_putnbr(i);
-	//	ft_putchar('\n');
-		i++;
-		env->tab.cy += env->coef;
-//		ft_putnbr(y);
-//		ft_putchar('\n');
-	}
+	x = x1;
+	while (++x <= x2)
+		mlx_pixel_put(e->mlx, e->win, x, y1 + ((y2 - y1) * (x - x1)) / (x2 - x1), 0xFFFFFF);
 }
 
+/*void	pixel_put_l(t_env *e, int x1, int x2, int y1, int y2)
+{
+	int		x;
 
-//segfault ds les deplacements avec les fleche, comprendre comment sauvegarder une data ds la structure
+	x = x2;
+	while (++x <= x1)
+		mlx_pixel_put(e->mlx, e->win, x, y2 + ((y1 - y2) * (x - x2)) / (x1 - x2), 0xFFFFFF);
+}
+*/
+void	pixel_put_u(t_env *e, int x1, int x2, int y1, int y2)
+{
+	int		y;
+
+	y = y1;
+	while (++y <= y2)
+		mlx_pixel_put(e->mlx, e->win, x1 + ((x2 - x1) * (y - y1)) / (y2 - y1), y, 0xFF88FF);
+}
+
+/*void	pixel_put_d(t_env *e, int x1, int x2, int y1, int y2)
+{
+	int		y;
+
+	y = y2;
+	while (++y <= y1)
+		mlx_pixel_put(e->mlx, e->win, x2 + ((x1 - x2) * (y - y2)) / (y1 - y2), y, 0xFFFFFF);
+}*/

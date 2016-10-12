@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 12:57:58 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/12 14:40:17 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/10/11 18:29:58 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,64 +38,75 @@ int		count(char *line)
 }
 
 //converti les colonnes en int
-void	get_int(int i, t_env *env, char *line)
+void	get_int(int i, t_env *e, char *line)
 {
 	int		n;
 	int		j;
+	int		z;
 
 	n = 0;
 	j = 0;
+	z = 0;
 	while (line[n] != '\0')
 	{
 		if (line[n] != ' ' && line[n] != '\0')
 		{
-			env->tab.tab[i][j] = line[n] - '0';
+			e->tab.tab[i][j] = line[n] - '0';
 			n++;
 			while (line[n] != ' ' && line[n] != '\0')
 			{
-				env->tab.tab[i][j] = env->tab.tab[i][j] * 10 + line[n] - '0';
+				e->tab.tab[i][j] = e->tab.tab[i][j] * 10 + line[n] - '0';
 				n++;
 			}
 			j++;
+			z++;
 		}
 		if (line[n] == ' ')
 			n++;
 	}
 }
 
-//malloc la map
-void	mall_tab(int fd, t_env *env)
+void	tab_line(t_env *e, int fd)
 {
-	int		n;
-	char	*line;
-	int		**tab;
+	char *line;
 
-	n = 0;
-	tab = NULL;
-	env->tab.i = 0; 
 	while (get_next_line(fd, &line))
 	{
-		if (env->tab.i == 0)
-			env->tab.j = count(line);
-		env->tab.i++;
+		if (e->tab.i == 0)
+			e->tab.j = count(line);
+		e->tab.i++;
 	}
-	tab = (int **)malloc(sizeof(int *) * env->tab.i);		//malloc la taille de la map (nb ligne)
+}
+
+//malloc la map
+void	mall_tab(int fd, t_env *e)
+{
+	int		y;
+	int		x;
+	int		**tab;
+
+	y = 0;
+	x = 0;
+	tab = NULL;
+	e->tab.i = 0;
+	tab_line(e, fd);	
+	tab = (int **)malloc(sizeof(int *) * e->tab.i);		//malloc la taille de la map (nb ligne)
 	if (tab == NULL)
 	{
 		ft_putendl("Probleme allocation memoire -> map.\n");
 		exit(1);
 	}
-	while (n <= env->tab.i)
+	while (y <= e->tab.i)
 	{
-		tab[n] = (int *)malloc(sizeof(int) * env->tab.j);
-		if (tab[n] == NULL)
+		tab[y] = (int *)malloc(sizeof(int ) * e->tab.j);
+		if (tab[y] == NULL)
 			exit(1);
-		n++;
+		y++;
 	}
-	env->tab.tab = tab;
+	e->tab.tab = tab;
 }
 
-t_env		*get_tab(char *str, t_env *env)
+t_env		*get_tab(char *str, t_env *e)
 {
 	int		fd;
 	int		fd2;
@@ -105,13 +116,13 @@ t_env		*get_tab(char *str, t_env *env)
 	i = 0;
 	fd = open(str, O_RDONLY);
 	fd2 = open(str, O_RDONLY);
-	mall_tab(fd, env);
+	mall_tab(fd, e);
 	close(fd);
 	while (get_next_line(fd2, &line))
 	{
-		get_int(i, env, line);
+		get_int(i, e, line);
 		i++;
 	}
 	close(fd2);
-	return (env);
+	return (e);
 }
