@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/22 17:27:08 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/10/12 15:28:56 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/05 16:09:20 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,44 @@
 
 void	mall_coord(t_env *e)
 {
-	int		i;
-	int		j;
+	int		y;
+	int		x;
 
-	i = 0;
-	e->coord.coord = (int ***)malloc(sizeof(int **) * e->tab.i);
-	while (i <= e->tab.i)
+	y = -1;
+	e->coord.coord = ft_memalloc((sizeof(int **)) * e->tab.i);
+	if (e->coord.coord == NULL)
+		exit(1);
+	while (++y <= e->tab.i)
 	{
-		e->coord.coord[i] = (int **)malloc(sizeof(int *) * e->tab.j);
-		j = 0;
-		while (j <= e->tab.j)
+		e->coord.coord[y] = ft_memalloc((sizeof(int *)) * e->tab.j);
+		if (e->coord.coord[y] == NULL)
+			exit(1);
+		x = -1;
+		while (++x <= e->tab.j)
 		{
-			e->coord.coord[i][j] = (int *)malloc(sizeof(int) * 2);
-			j++;
+			e->coord.coord[y][x] = ft_memalloc((sizeof(int)) * 2);
+			if (e->coord.coord[y][x] == NULL)
+				exit(1);
 		}
-		i++;
 	}
 }
 
-void	get_coord(t_env *e, int x, int y)
+void	get_coord(t_env *e)
 {
+	int		x;
+	int		y;
+
 	mall_coord(e);
-	y = 0;
+	y = -1;
 	e->tab.itmp = 0;
-	while (y < e->tab.i)
+	while (++y < e->tab.i)
 	{
-		x = 0;
-		while (x < e->tab.j)
+		x = -1;
+		while (++x < e->tab.j)
 		{
-			e->coord.coord[y][x][0] = x + e->tab.itmp;
-			e->coord.coord[y][x][1] = y;
-			ft_putstr("-------------\n");
-			ft_putnbr(x);
-			ft_putchar(' ');
-			ft_putnbr(y);
-			ft_putchar(' ');
-			ft_putnbr(e->coord.coord[y][x][0]);
-			ft_putchar(' ');
-			ft_putnbr(e->coord.coord[y][x][1]);
-			ft_putstr("\n-------------\n");
-			x++;
+			e->coord.coord[y][x][0] = (x + e->tab.itmp) * e->coef;
+			e->coord.coord[y][x][1] = y * e->coef + e->tab.tab[y][x] * e->amp;
 		}
-		y++;
 		e->tab.itmp++;
 	}
 }

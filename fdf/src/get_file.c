@@ -6,123 +6,90 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/03 12:57:58 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/10/11 18:29:58 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/06 15:53:18 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <stdio.h>
 
-int		count(char *line)
+int			count(char *line)
 {
-	int		i;
+	char	**split;
 	int		j;
 
-	i = 0;
-	j = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ')
-		{
-			j++;	
-			while (line[i] != ' ')
-			{
-				i++;
-				if (line[i] == '\n' || line[i] == '\0')
-					return (j);
-			}
-		}
-		i++;
-	}
-	return(j);
+	j = -1;
+	split = ft_strsplit(line, ' ');
+	while (split[++j])
+		;
+	return (j);
 }
 
-//converti les colonnes en int
-void	get_int(int i, t_env *e, char *line)
+void		get_int(int i, t_env *e, char *line)
 {
-	int		n;
 	int		j;
-	int		z;
+	char	**split;
 
-	n = 0;
-	j = 0;
-	z = 0;
-	while (line[n] != '\0')
+	j = -1;
+	split = ft_strsplit(line, ' ');
+	while (split[++j])
 	{
-		if (line[n] != ' ' && line[n] != '\0')
-		{
-			e->tab.tab[i][j] = line[n] - '0';
-			n++;
-			while (line[n] != ' ' && line[n] != '\0')
-			{
-				e->tab.tab[i][j] = e->tab.tab[i][j] * 10 + line[n] - '0';
-				n++;
-			}
-			j++;
-			z++;
-		}
-		if (line[n] == ' ')
-			n++;
+		e->tab.tab[i][j] = ft_atoi(split[j]);
+		ft_putnbr(e->tab.tab[i][j]);
 	}
 }
 
-void	tab_line(t_env *e, int fd)
+void		tab_line(t_env *e, int fd)
 {
-	char *line;
+	char	*line;
 
+	e->tab.i = 0;
 	while (get_next_line(fd, &line))
 	{
 		if (e->tab.i == 0)
 			e->tab.j = count(line);
 		e->tab.i++;
 	}
+	ft_putnbr(e->tab.i);
+	ft_putchar('\n');
+	ft_putnbr(e->tab.j);
+	ft_putchar('\n');
 }
 
-//malloc la map
-void	mall_tab(int fd, t_env *e)
+void		mall_tab(int fd, t_env *e)
 {
 	int		y;
-	int		x;
 	int		**tab;
 
-	y = 0;
-	x = 0;
+	y = -1;
 	tab = NULL;
-	e->tab.i = 0;
-	tab_line(e, fd);	
-	tab = (int **)malloc(sizeof(int *) * e->tab.i);		//malloc la taille de la map (nb ligne)
+	tab_line(e, fd);
+	tab = ft_memalloc((sizeof(int *)) * e->tab.i);
 	if (tab == NULL)
-	{
-		ft_putendl("Probleme allocation memoire -> map.\n");
 		exit(1);
-	}
-	while (y <= e->tab.i)
+	while (++y <= e->tab.i)
 	{
-		tab[y] = (int *)malloc(sizeof(int ) * e->tab.j);
+		tab[y] = ft_memalloc((sizeof(int)) * e->tab.j);
 		if (tab[y] == NULL)
 			exit(1);
-		y++;
 	}
 	e->tab.tab = tab;
 }
 
-t_env		*get_tab(char *str, t_env *e)
+t_env		*get_tab(t_env *e)
 {
 	int		fd;
 	int		fd2;
 	int		i;
 	char	*line;
 
-	i = 0;
-	fd = open(str, O_RDONLY);
-	fd2 = open(str, O_RDONLY);
+	i = -1;
+	fd = open(e->file, O_RDONLY);
+	fd2 = open(e->file, O_RDONLY);
 	mall_tab(fd, e);
 	close(fd);
 	while (get_next_line(fd2, &line))
-	{
-		get_int(i, e, line);
-		i++;
-	}
+		get_int(++i, e, line);
 	close(fd2);
 	return (e);
 }

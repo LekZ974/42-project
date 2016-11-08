@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 13:02:47 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/10/07 16:58:01 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/06 17:59:08 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,67 +15,51 @@
 
 int		key_funct(int keycode, t_env *e)
 {
-	printf("########## event key %d #########\n", keycode);
+	erase(e);
 	if (keycode == 53)
 	{
 		free(e);
 		exit(0);
 	}
 	if (keycode == 126 || keycode == 13)
-	{
-		erase(e);
 		e->y_origin -= 10;
-	}
 	if (keycode == 125 || keycode == 1)
-	{
-		erase(e);
 		e->y_origin += 10;
-	}
 	if (keycode == 123 || keycode == 0)
-	{
-		erase(e);
 		e->x_origin -= 10;
-	}
 	if (keycode == 124 || keycode == 2)
-	{
-		erase(e);
 		e->x_origin += 10;
-	}
 	if (keycode == 69 || keycode == 12)
 	{
-		erase(e);
 		e->coef += 1;
+		e->x_origin -= 5;
+		e->y_origin -= 5;
 	}
-	if (e->coef != 0 && (keycode == 78 || keycode == 14))
+	key_funct2(keycode, e);
+	return (0);
+}
+
+int		key_funct2(int keycode, t_env *e)
+{
+	if (e->coef != 1 && (keycode == 78 || keycode == 14))
 	{
-		erase(e);
 		e->coef -= 1;
+		e->x_origin += 5;
+		e->y_origin += 5;
 	}
 	if (keycode == 67 || keycode == 17)
-	{
-		erase(e);
 		e->amp -= 1;
-	}
 	if (keycode == 75 || keycode == 15)
-	{
-		erase(e);
 		e->amp += 1;
-	}
 	if (keycode == 92 || keycode == 7)
-	{
-		erase(e);
 		e->ang += 1;
-	}
 	if (keycode == 91 || keycode == 6)
-	{
-		erase(e);
 		e->ang -= 1;
-	}
 	if (keycode == 81 || keycode == 50)
-	{
-		erase(e);
 		disp_window(e);
-	}
+	if (keycode == 82)
+		display_param(e);
 	draw(e);
+	ft_putendl("keyfunc");
 	return (0);
 }

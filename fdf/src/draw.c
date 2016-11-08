@@ -6,111 +6,98 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/05 17:51:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/10/12 17:13:56 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/06 17:26:33 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	draw_line(t_env *e, int x1, int x2, int y1, int y2)
+void	join(t_env *e)
 {
-	x1 = disp_point_x(e, x1);
-	x2 = disp_point_x(e, x2);
-	y1 = disp_point_y(e, y1);
-	y2 = disp_point_y(e, y2);
-	if (x1 <= x2 && (x2 - x1) > 0)
-		pixel_put_r(e, x1, x2, y1, y2);
-	else if (x2 <= x1 && (x1 - x2) > 0)
-		pixel_put_r(e, x2, x1, y2, y1);
-	else if (y2 <= y1 && (y1 - y2) > 0)
-		pixel_put_u(e, x1, x2, y1, y2);
-	else if (y1 <= y2 && (y2 - y1) > 0)
-		pixel_put_u(e, x2, x1,y2, y1);
-}
+	int		x;
+	int		y;
 
-void	draw_pos_h(t_env *e, int x, int y)
-{
-	int		x2;
-	int		y2;
-
-	if (x < 0)
-		x *= -1;
-	if (y < 0)
-		y *= -1;
-	if (x == e->tab.j - 1 + e->tab.itmp)
-	{	
-		x2 = x;
-		y2 = y;
+	x = e->coord.x1 - e->coord.x2;
+	y = e->coord.y1 - e->coord.y2;
+	x = ft_abs(x);
+	y = ft_abs(y);
+	disp_limit(e);
+	if (x > y)
+	{
+		if (e->coord.x1 < e->coord.x2)
+			pixel_put1(e);
+		else if (e->coord.x1 > e->coord.x2)
+			pixel_put2(e);
 	}
 	else
 	{
-		x2 = e->coord.coord[e->coord.y][e->coord.x + 1][0];
-		y2 = e->coord.coord[e->coord.y][e->coord.x + 1][1];
+		if (e->coord.y1 < e->coord.y2)
+			pixel_put3(e);
+		else if (e->coord.y1 > e->coord.y2)
+			pixel_put4(e);
 	}
-	ft_putnbr(x);
-	ft_putchar(' ');
-	ft_putnbr(y);
-	ft_putchar(' ');
-	ft_putnbr(x2);
-	ft_putchar(' ');
-	ft_putnbr(y2);
-	ft_putchar('\n');
-	draw_line(e, x, x2, y, y2);
 }
 
-void	draw_pos_v(t_env *e, int x, int y)
+void	coord_h(t_env *e, int x, int y)
 {
-	int		x2;
-	int		y2;
-
-	if (x < 0)
-		x *= -1;
-	if (y < 0)
-		y *= -1;
-	if (y == e->tab.i - 1)
+	e->coord.x1 = e->coord.coord[y][x][0] + e->x_origin;
+	e->coord.y1 = e->coord.coord[y][x][1] + e->y_origin;
+	if (x != e->tab.j - 1)
 	{
-		x2 = x;
-		y2 = y;
+		e->coord.x2 = e->coord.coord[y][x + 1][0] + e->x_origin;
+		e->coord.y2 = e->coord.coord[y][x + 1][1] + e->y_origin;
 	}
 	else
 	{
-		x2 = e->coord.coord[e->coord.y + 1][e->coord.x][0];
-		y2 = e->coord.coord[e->coord.y + 1][e->coord.x][1];
+		e->coord.x2 = e->coord.coord[y][x][0] + e->x_origin;
+		e->coord.y2 = e->coord.coord[y][x][1] + e->y_origin;
 	}
-	ft_putnbr(x);
-	ft_putchar(' ');
-	ft_putnbr(y);
-	ft_putchar(' ');
-	ft_putnbr(x2);
-	ft_putchar(' ');
-	ft_putnbr(y2);
-	ft_putchar('\n');
-	draw_line(e, x, x2, y, y2);
+	join(e);
+}
+
+void	coord_v(t_env *e, int x, int y)
+{
+	e->coord.x1 = e->coord.coord[y][x][0] + e->x_origin;
+	e->coord.y1 = e->coord.coord[y][x][1] + e->y_origin;
+	if (y != e->tab.i - 1)
+	{
+		e->coord.x2 = e->coord.coord[y + 1][x][0] + e->x_origin;
+		e->coord.y2 = e->coord.coord[y + 1][x][1] + e->y_origin;
+	}
+	else
+	{
+		e->coord.x2 = e->coord.coord[y][x][0] + e->x_origin;
+		e->coord.y2 = e->coord.coord[y][x][1] + e->y_origin;
+	}
+	join(e);
+}
+
+void	draw_pos(t_env *e, int x, int y)
+{
+	e->level = e->tab.tab[y][x] * e->amp;
+	coord_h(e, x, y);
+	coord_v(e, x, y);
 }
 
 void	draw(t_env *e)
 {
-	e->coord.x = 0;
-	e->coord.y = 0;
-	get_coord(e, e->coord.x, e->coord.y);
+	int		x;
+	int		y;
+
+	y = 0;
 	e->tab.itmp = 0;
-	while (e->coord.y < e->tab.i)
+	get_coord(e);
+	while (y < e->tab.i)
 	{
-		e->coord.x = 0;
-		ft_putstr("#############\n");
-		while (e->coord.x < e->tab.j)
+		x = 0;
+		while (x < e->tab.j)
 		{
-			ft_putchar('\n');
-			draw_pos_h(e, e->coord.coord[e->coord.y][e->coord.x][0], e->coord.coord[e->coord.y][e->coord.x][1]);
-			draw_pos_v(e, e->coord.coord[e->coord.y][e->coord.x][0], e->coord.coord[e->coord.y][e->coord.x][1]);
-			e->coord.x++;
+			if (x == e->tab.j - 1 && y == e->tab.i - 1)
+				return ;
+			draw_pos(e, x, y);
+			x++;
 		}
-		ft_putstr("\n#############\n");
-		e->coord.y++;
+		y++;
 		e->tab.itmp++;
 	}
 }
-
-//y2 depasse les limites fixer a resoudre (a reverifier)
-//faire ligne verticale
-//pivot a peu pres bon
