@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/05 17:51:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/11/06 17:26:33 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/15 17:31:25 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	draw(t_env *e)
 	y = 0;
 	e->tab.itmp = 0;
 	get_coord(e);
+	display_aff(e);
 	while (y < e->tab.i)
 	{
 		x = 0;

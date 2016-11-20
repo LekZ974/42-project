@@ -6,11 +6,12 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 13:49:10 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/11/05 16:01:14 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/17 10:03:56 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+#include <stdio.h>
 
 int		fdf(char *str)
 {
@@ -27,6 +28,7 @@ int		fdf(char *str)
 	e = get_tab(e);
 	draw(e);
 	mlx_hook(e->win, 2, (1L < 10), key_funct, e);
+	mlx_hook(e->win, 17, (1L << 17), ft_quit, e);
 	mlx_loop(e->mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 16:15:56 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/11/06 18:00:37 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/17 09:57:51 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #define	HEIGHT 1000
 
 # include "../libft/libft.h"
-# include <mlx.h>
+# include "mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -42,13 +42,6 @@ typedef	struct		s_coord
 	int				***coord;
 }					t_coord;
 
-/*typedef struct		s_color
-{
-	int				color1;
-	int				color2;
-	int				**color;
-}					t_color;
-*/
 typedef struct		s_env
 {
 	void			*mlx;
@@ -59,10 +52,8 @@ typedef struct		s_env
 	int				amp;
 	int				x_origin;
 	int				y_origin;
-	int				ang;
 	t_tab			tab;
 	t_coord			coord;
-//	t_color			color;
 }					t_env;
 
 int 	check(char *file);
@@ -94,11 +85,13 @@ void	coord_v(t_env *e, int x, int y);
 
 int		key_funct(int keycode, t_env *e);
 int		key_funct2(int keycode, t_env *e);
+int		ft_quit(t_env *e);
 
 void	disp_window(t_env *e);
 void	disp_limit(t_env *e);
 void	display_param(t_env *e);
-void	erase(t_env *e);
+void	display_aff(t_env *e);
+void	ft_erase(t_env *e);
 
 int		ft_color(t_env *e);
 
