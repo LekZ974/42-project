@@ -6,7 +6,7 @@
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 10:30:42 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/09/04 16:50:05 by ahoareau         ###   ########.fr       */
+/*   Updated: 2016/11/26 13:44:33 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 # include <unistd.h>
 # include <string.h>
 
-#define BUFF_SIZE 1
+# define ALPHANUMS "0123456789abcdefghijklmnopqrstuvwxyz"
+# define HEXNUMS "0123456789ABCDEF"
+# define DIGITS "0123456789"
+# define BUFF_SIZE 1
 
 typedef struct		s_list
 {
@@ -33,6 +36,8 @@ typedef struct		s_fd
 }					t_fd;
 
 int					get_next_line(const int fd, char **line);
+int					ft_strpos(const char *str, char c);
+long int			ft_strtol(char *nptr, char **endptr, int base);
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

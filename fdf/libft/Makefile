@@ -6,7 +6,7 @@
 #    By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/29 10:07:34 by ahoareau          #+#    #+#              #
-#    Updated: 2016/06/23 14:50:56 by ahoareau         ###   ########.fr        #
+#    Updated: 2016/11/26 13:24:27 by ahoareau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,9 @@ SRC = ft_abs.c\
 	  ft_strtrim.c\
 	  ft_tolower.c\
 	  ft_toupper.c\
-	  get_next_line.c
+	  get_next_line.c\
+	  ft_strpos.c\
+	  ft_strtol.c
 OBJ = $(SRC:.c=.o)
 NAME = libft.a
 

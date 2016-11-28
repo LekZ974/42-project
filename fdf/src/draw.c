@@ -5,100 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/05 17:51:04 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/11/15 17:31:25 by ahoareau         ###   ########.fr       */
+/*   Created: 2016/11/27 14:26:18 by ahoareau          #+#    #+#             */
+/*   Updated: 2016/11/28 15:29:35 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../include/fdf.h"
 
-void	join(t_env *e)
+void		draw_line(t_env *e, t_point start, t_point end, t_tab *tab)
 {
 	int		x;
 	int		y;
 
-	x = e->coord.x1 - e->coord.x2;
-	y = e->coord.y1 - e->coord.y2;
+	x = end.x - start.x;
+	y = end.y - start.y;
 	x = ft_abs(x);
 	y = ft_abs(y);
-	disp_limit(e);
 	if (x > y)
 	{
-		if (e->coord.x1 < e->coord.x2)
-			pixel_put1(e);
-		else if (e->coord.x1 > e->coord.x2)
-			pixel_put2(e);
+		if (start.x < end.x)
+			pixel_put1(e, start, end, tab);
+		else if (start.x > end.x)
+			pixel_put1(e, end, start, tab);
 	}
 	else
 	{
-		if (e->coord.y1 < e->coord.y2)
-			pixel_put3(e);
-		else if (e->coord.y1 > e->coord.y2)
-			pixel_put4(e);
+		if (start.y < end.y)
+			pixel_put2(e, start, end, tab);
+		else if (start.y > end.y)
+			pixel_put2(e, end, start, tab);
 	}
 }
 
-void	coord_h(t_env *e, int x, int y)
-{
-	e->coord.x1 = e->coord.coord[y][x][0] + e->x_origin;
-	e->coord.y1 = e->coord.coord[y][x][1] + e->y_origin;
-	if (x != e->tab.j - 1)
-	{
-		e->coord.x2 = e->coord.coord[y][x + 1][0] + e->x_origin;
-		e->coord.y2 = e->coord.coord[y][x + 1][1] + e->y_origin;
-	}
-	else
-	{
-		e->coord.x2 = e->coord.coord[y][x][0] + e->x_origin;
-		e->coord.y2 = e->coord.coord[y][x][1] + e->y_origin;
-	}
-	join(e);
-}
-
-void	coord_v(t_env *e, int x, int y)
-{
-	e->coord.x1 = e->coord.coord[y][x][0] + e->x_origin;
-	e->coord.y1 = e->coord.coord[y][x][1] + e->y_origin;
-	if (y != e->tab.i - 1)
-	{
-		e->coord.x2 = e->coord.coord[y + 1][x][0] + e->x_origin;
-		e->coord.y2 = e->coord.coord[y + 1][x][1] + e->y_origin;
-	}
-	else
-	{
-		e->coord.x2 = e->coord.coord[y][x][0] + e->x_origin;
-		e->coord.y2 = e->coord.coord[y][x][1] + e->y_origin;
-	}
-	join(e);
-}
-
-void	draw_pos(t_env *e, int x, int y)
-{
-	e->level = e->tab.tab[y][x] * e->amp;
-	coord_h(e, x, y);
-	coord_v(e, x, y);
-}
-
-void	draw(t_env *e)
+void		draw_vert(t_env *e, t_tab *tab)
 {
 	int		x;
 	int		y;
 
 	y = 0;
-	e->tab.itmp = 0;
-	get_coord(e);
-	display_aff(e);
-	while (y < e->tab.i)
+	while (y < tab->ymax - 1)
 	{
 		x = 0;
-		while (x < e->tab.j)
+		while (x < tab->xmax - 1)
 		{
-			if (x == e->tab.j - 1 && y == e->tab.i - 1)
-				return ;
-			draw_pos(e, x, y);
+			tab->z1 = tab->input[y][x];
+			tab->z2 = tab->input[y][x + 1];
+			draw_line(e, tab->grid[y][x], tab->grid[y][x + 1], tab);
 			x++;
 		}
+		tab->z1 = tab->input[y][tab->xmax - 1];
+		tab->z2 = tab->input[y + 1][tab->xmax - 1];
+		draw_line(e, tab->grid[y][tab->xmax - 1], \
+				tab->grid[y + 1][tab->xmax - 1], tab);
 		y++;
-		e->tab.itmp++;
 	}
+}
+
+void		draw_hori(t_env *e, t_tab *tab)
+{
+	int		x;
+	int		y;
+
+	x = 0;
+	while (x < tab->xmax - 1)
+	{
+		y = 0;
+		while (y < tab->ymax - 1)
+		{
+			tab->z1 = tab->input[y][x];
+			tab->z2 = tab->input[y + 1][x];
+			draw_line(e, tab->grid[y][x], tab->grid[y + 1][x], tab);
+			y++;
+		}
+		tab->z1 = tab->input[tab->ymax - 1][x];
+		tab->z2 = tab->input[tab->ymax - 1][x + 1];
+		draw_line(e, tab->grid[tab->ymax - 1][x], \
+				tab->grid[tab->ymax - 1][x + 1], tab);
+		x++;
+	}
+}
+
+void		draw(t_env *e, t_tab *tab)
+{
+	draw_vert(e, tab);
+	draw_hori(e, tab);
+	display_aff(e, tab);
 }

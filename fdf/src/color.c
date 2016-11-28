@@ -5,30 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/06 16:05:43 by ahoareau          #+#    #+#             */
-/*   Updated: 2016/11/15 13:18:00 by ahoareau         ###   ########.fr       */
+/*   Created: 2016/11/28 13:44:21 by ahoareau          #+#    #+#             */
+/*   Updated: 2016/11/28 17:42:09 by ahoareau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../include/fdf.h"
 
-int			ft_color(t_env *e)
+int		get_level(int z1, int z2, t_tab *tab)
 {
+	int		level;
+	int		z;
+
+	level = 0;
+	z = (z1 + z2) / 2;
+	if (z == tab->zmin)
+		return (1);
+	if (z > tab->zmin && z < tab->zmid / 2)
+		return (2);
+	if (z >= tab->zmid / 2 && z < tab->zmid)
+		return (3);
+	if (z >= tab->zmid && z < tab->zmax)
+		return (4);
+	if (z == tab->zmax)
+		return (5);
+	return (0);
+}
+
+int		ft_color(t_tab *tab)
+{
+	int		z1;
+	int		z2;
 	int		color;
 
-	color = 0x33FF00;
-	if (e->level > 50 && e->coord.y1 <= e->coord.y2)
-	{
-		color = 0x33FF33;
-		if (e->level > 150 && e->coord.y1 <= e->coord.y2)
-			color = 0x333300;
-	}
-	else if (e->level < -50)
-	{
-		if (e->level < 0 && e->coord.y1 == e->coord.y2)
-			color = 0xFFCC00;
-		if (e->level < -150 && e->coord.y1 == e->coord.y2)
-			color = 0xFF3300;
-	}
+	z1 = tab->z1;
+	z2 = tab->z2;
+	color = 0xFFFFFF;
+	if (z1 < tab->zmin || z1 > tab->zmax)
+		return (0);
+	if (z2 < tab->zmin || z2 > tab->zmax)
+		return (0);
+	else if (get_level(z1, z2, tab) == 1)
+		color = 0x0066FF;
+	else if (get_level(z1, z2, tab) == 2)
+		color = 0x33FF00;
+	else if (get_level(z1, z2, tab) == 3)
+		color = 0xFFCC00;
+	else if (get_level(z1, z2, tab) == 4)
+		color = 0xFF3300;
+	else if (get_level(z1, z2, tab) == 5)
+		color = 0x660000;
+	else
+		color = 0xFFFFFF;
 	return (color);
 }

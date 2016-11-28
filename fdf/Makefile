@@ -6,7 +6,7 @@
 #    By: ahoareau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/12 15:37:33 by ahoareau          #+#    #+#              #
-#    Updated: 2016/11/15 11:14:14 by ahoareau         ###   ########.fr        #
+#    Updated: 2016/11/28 17:08:02 by ahoareau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,27 +14,27 @@ NAME = fdf
 
 CC = gcc -Wall -Wextra -Werror -g
 
-SRC = ./src/fdf.c\
-	  ./src/check.c\
-	  ./src/put_pxl.c\
-	  ./src/get_file.c\
-	  ./src/display.c\
-	  ./src/get_coord.c\
+SRC = ./src/main.c\
+	  ./src/tab.c\
+	  ./src/env.c\
+	  ./src/parse.c\
 	  ./src/draw.c\
+	  ./src/pixel_put.c\
+	  ./src/handling.c\
 	  ./src/color.c\
-	  ./src/command.c
+	  ./src/check.c
 
-OBJ = fdf.o\
-	 check.o\
-	 put_pxl.o\
-	 get_file.o\
-	 display.o\
-	 get_coord.o\
+OBJ = main.o\
+	 tab.o\
+	 env.o\
+	 parse.o\
 	 draw.o\
+	 pixel_put.o\
+	 handling.o\
 	 color.o\
-	 command.o
+	 check.o
 
-HEADER = ./includes/fdf.h\
+HEADER = ./include/fdf.h\
 		 ./libft/libft.h
 
 FINDLIBFT = -Llibft
