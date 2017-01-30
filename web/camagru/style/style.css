@@ -1,0 +1,408 @@
+*{margin: 0;
+  padding:0;
+
+  box-sizing: border-box;
+}
+
+body
+{
+	height: 100%;
+	background-image: url(http://www.01-fond-ecran.com/fond-ecran/3199/fond-ecran-46708,paysages.jpg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+html
+{
+	height: 100%;
+}
+
+h1
+{
+	position: relative;
+	padding-top: 1em;
+    padding-bottom: 1em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: #e7e5e4;
+	background-image: url(http://ui.stage.bidsystem.ak-networks.com/marketingSite/wp-content/themes/dt-nimble/images/backgrounds/header/art-header-main/full/r_atr-header-main.jpg);
+    background-position: 0 -20em;
+    background-color: #e7e5e4;
+    font-family: 'Verdana', sans-serif;
+    background-attachment: fixed;
+    font-size: 6vw;
+    letter-spacing: .10em;
+    text-align: left;
+    text-shadow: 0.2em 0.1em 1em #767676;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 a
+{
+	position: absolute;
+	color: black;
+	text-decoration: none;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+h1 a:hover
+{
+	color: white;
+	transition: 0.3s;
+}
+
+h2
+{
+	position: relative;
+	padding-top: 1em;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #e7e5e4;
+    font-family: 'Verdana', sans-serif;
+    font-size: 3vw;
+    letter-spacing: .3em;
+    text-align: center;
+}
+
+h3
+{
+	position: relative;
+	padding-top: 1em;
+    margin-bottom: 0.2em;
+    color: #e7e5e4;
+    font-family: 'Verdana', sans-serif;
+    font-size: 1.8vw;
+    letter-spacing: .3em;
+    text-align: left;
+    text-align: center;
+}
+
+.menu
+{
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.menu li
+{
+	position: relative;
+	margin-bottom: 0.1em;
+	display: inline;
+	width: 14em;
+	height: 2.2em;
+	background-color: #efad1f;
+	text-align: center;
+	border-radius: 0.2em;
+}
+
+.menu li:hover
+{
+	position: relative;
+	border-radius: 0.8em;
+	font-size: 0.8em;
+	transition: 0.3s;
+	color: white;
+	background-color: #518fd1;
+	display: inline;
+	width: 14em;
+	height: 2em;
+	text-align: center;
+}
+
+.menu li a
+{
+	position: absolute;
+	z-index: 1;
+	font-family: Verdana, sans-serif;
+	color: black;
+	font-size: 1.2em;
+	text-decoration: none;
+	border-color: black;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.menu li a:hover, menu li a:focus
+{
+	position: absolute;
+	z-index: 2;
+	border-radius: 0.8em;
+	transition: 0.3s;
+	color: white;
+}
+
+.gestion
+{
+	position: absolute;
+	top: 0em;
+	right: 0em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.gestion li
+{
+	list-style-type: none;
+	position: relative;
+	background-color: black;
+	width: 8em;
+	align-items: center;
+}
+
+.gestion li:hover
+{
+	transition: 0.3s;
+	background-color: #518fd1;
+
+}
+
+.gestion li a
+{
+	text-decoration: none;
+	font-family: Verdana, sans-serif;
+	color: #efad1f;
+	right: 0;
+}
+
+.gestion li a:hover
+{
+	transition: 0.3s;
+	color: white;
+}
+
+.sidebar
+{
+	margin-top: 3em;
+	background-color: #efad1f;
+	width: 20em;
+	height: 50%;
+	float: right;
+	margin-right: 1em;
+	opacity: 0.7;
+	margin-bottom: 3em;
+}
+
+.sidebar h4
+{
+	color: black;
+	font-family: Verdana, sans-serif;
+	text-align: center;
+}
+
+.sidebar a
+{
+	position: relative;
+}
+
+.auth
+{
+	display: flex;
+	justify-content: space-around;
+}
+
+.connexion
+{
+	position: relative;
+	background-image: url(http://ui.stage.bidsystem.ak-networks.com/marketingSite/wp-content/themes/dt-nimble/images/backgrounds/header/art-header-main/full/r_atr-header-main.jpg);
+	width: 20em;
+	background-size: 150em;
+	background-position: -5em;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 2em;
+	border-radius: 2em;
+}
+
+.connexion:hover
+{
+	width: 40em;
+	transition: 0.5s;
+	font-size: 100%;
+}
+
+.creation
+{
+	position: relative;
+	background-image: url(http://ui.stage.bidsystem.ak-networks.com/marketingSite/wp-content/themes/dt-nimble/images/backgrounds/header/art-header-main/full/r_atr-header-main.jpg);
+	background-size: 150em;
+	background-position: -0em -20em;
+	background-repeat: no-repeat;
+	width: 20em;
+	text-align: center;
+	margin: auto;
+	border-radius: 2em;
+}
+
+.creation:hover
+{
+	width: 40em;
+	transition: 0.5s;
+	font-size: 100%;
+}
+
+.footer
+{
+	position: absolute;
+	bottom: 1em;
+	height: 2em;
+	width: 100%;
+	background-color: #efad1f;
+}
+
+.footer h5
+{
+	text-align: right;
+	margin: 0 auto;
+	color: white;
+}
+
+#list
+{
+	display:block;
+}
+
+#list table
+{
+	width:80%;
+	background-image: url(http://ui.stage.bidsystem.ak-networks.com/marketingSite/wp-content/themes/dt-nimble/images/backgrounds/header/art-header-main/full/r_atr-header-main.jpg);
+	background-size: 150%;
+	background-position: 0 -20em;
+	border:solid black 1px;
+	border-collapse:collapse;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+#list td
+{
+	padding:10px;
+	border:solid black 1px;
+}
+
+#list img
+{
+	max-height:70px;
+	width:auto;
+}
+
+#list span
+{
+	font-size:20px;
+	text-align:center;
+}
+
+#input_error
+{
+	text-color:#FFFFFF;
+	background-color:red;
+	font-size:18px;
+}
+
+#input_clear
+{
+	text-color:#FFFFFF;
+	background-color:green;
+	font-size:18px;
+}
+@media screen and (max-width: 1024px)
+{
+	.auth
+	{
+		flex-direction: column;
+	}
+}
+
+@media screen and (min-width: 1280px)
+{
+	.auth
+	{
+		font-size: 1em;
+	}
+
+	.connexion
+	{
+		position: relative;
+		background-image: url(http://ui.stage.bidsystem.ak-networks.com/marketingSite/wp-content/themes/dt-nimble/images/backgrounds/header/art-header-main/full/r_atr-header-main.jpg);
+		width: 20em;
+		font-size: 1em;
+		background-size: 150em;
+		background-position: -5em;
+		text-align: center;
+		margin: auto;
+		margin-bottom: 2em;
+		border-radius: 2em;
+	}
+
+	.connexion:hover
+	{
+		width: 40em;
+		transition: 0.5s;
+		font-size: 100%;
+	}
+
+	.creation
+	{
+		font-size: 1em;
+		position: relative;
+		background-image: url(http://ui.stage.bidsystem.ak-networks.com/marketingSite/wp-content/themes/dt-nimble/images/backgrounds/header/art-header-main/full/r_atr-header-main.jpg);
+		background-size: 150em;
+		background-position: -0em -20em;
+		background-repeat: no-repeat;
+		width: 20em;
+		text-align: center;
+		margin: auto;
+		border-radius: 2em;
+	}
+
+	.creation:hover
+	{
+		width: 40em;
+		transition: 0.5s;
+		font-size: 100%;
+	}
+	h2
+	{
+		position: relative;
+		padding-top: 1em;
+		margin-top: 0;
+		margin-bottom: 0;
+		color: #e7e5e4;
+		font-family: 'Verdana', sans-serif;
+	    font-size: 2em;
+	    letter-spacing: .3em;
+	    text-align: center;
+	}
+
+	h3
+	{
+		position: relative;
+		padding-top: 1em;
+	    margin-bottom: 0.2em;
+	    color: #e7e5e4;
+	    font-family: 'Verdana', sans-serif;
+	    font-size: 1.5em;
+  		letter-spacing: .3em;
+  	 	text-align: left;
+   		text-align: center;
+	}
+}
